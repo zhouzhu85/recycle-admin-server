@@ -1,0 +1,40 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "/welcome"
+  },
+  "logoInfo": {
+    "title": "LAYUI MINI",
+    "image": "/static/images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "回收站管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "回收客管理",
+          "href": "usersManagement/index",
+          "icon": "fa fa-users",
+          "target": "_self"
+        },
+        {
+          "title": "回收分类管理",
+          "href": "categoryManagement/index",
+          "icon": "fa fa-gears",
+          "target": "_self"
+        },
+        {
+          "title": "订单管理",
+          "href": "orderManagement/index",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        }
+      ]
+    }
+
+  ]
+}
