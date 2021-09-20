@@ -1,8 +1,15 @@
 package com.recycle.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
-public class RecycleResult<T> {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RecycleResult {
     /**
      * 状态码
      */
@@ -18,6 +25,24 @@ public class RecycleResult<T> {
     /**
      * 数据集合
      */
-    private List<T> data;
+    private Object data;
 
+    public RecycleResult(Integer code, String msg, Object data) {
+        this.code=code;
+        this.msg=msg;
+        this.data= data;
+    }
+
+    public static RecycleResult ok(){
+        return new RecycleResult(0,"查询成功",null);
+    }
+    public static RecycleResult ok(Object data,Integer count){
+        return new RecycleResult(0,"查询成功",count,data);
+    }
+    public static RecycleResult ok(String msg,Object data){
+        return new RecycleResult(0,msg,data);
+    }
+    public static RecycleResult ok(String msg){
+        return new RecycleResult(0,msg,null);
+    }
 }

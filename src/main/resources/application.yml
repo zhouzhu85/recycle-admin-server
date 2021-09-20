@@ -1,6 +1,7 @@
 server:
   port: 8081
 spring:
+  ## thymeleaf 模板配置
   thymeleaf:
     mode: HTML5
     encoding: UTF-8
@@ -10,3 +11,15 @@ spring:
     prefix: classpath:/template
   mvc:
     static-path-pattern: /static/**
+  ## 数据库驱动配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/recyle_admin_db?characterEncoding=utf8
+    username: root
+    password:
+## mybatis 配置
+mybatis:
+  type-aliases-package: com.recycle.model
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

@@ -1,5 +1,15 @@
 package com.recycle.model;
 
-public class Users {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Users {
+    private Long id;
+    private String userName;
+    private String phone;
+    private String sex;
 }
