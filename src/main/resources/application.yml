@@ -16,10 +16,17 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/recyle_admin_db?characterEncoding=utf8
     username: root
-    password:
+    password: zhouzhu
+  web:
+    resources:
+      static-locations: classpath:/static
 ## mybatis 配置
 mybatis:
   type-aliases-package: com.recycle.model
   mapper-locations: classpath:/mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
+# 用于雪花算法生成id
+datacenterId: 2
+workerId: 1

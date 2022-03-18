@@ -2,23 +2,21 @@
 
     <div class="layui-form layuimini-form">
         <div class="layui-form-item">
-            <label class="layui-form-label required">回收客名字</label>
+            <label class="layui-form-label required">分类名称</label>
             <div class="layui-input-block">
-                <input type="text" name="userName" lay-verify="required" lay-reqtext="用户名不能为空" placeholder="请输入用户名" value="" class="layui-input">
-                <tip>填写自己管理账号的名称。</tip>
+                <input type="text" name="categoryName" lay-verify="required" lay-reqtext="分类名称不能为空" placeholder="请输入分类名称" value="" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label required">性别</label>
+            <label class="layui-form-label required">单位名称</label>
             <div class="layui-input-block">
-                <input type="radio" name="sex" value="男" title="男" checked="">
-                <input type="radio" name="sex" value="女" title="女">
+                <input type="text" name="unitName" lay-verify="required" lay-reqtext="单位名称不能为空" placeholder="请输入单位名称" value="" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label required">手机</label>
+            <label class="layui-form-label required">单位值</label>
             <div class="layui-input-block">
-                <input type="number" name="phone" lay-verify="required" lay-reqtext="手机不能为空" placeholder="请输入手机" value="" class="layui-input">
+                <input type="number" name="unitValue" lay-verify="required" lay-reqtext="单位值不能为空" placeholder="请输入单位值" value="" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -45,9 +43,9 @@
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            console.log(data)
+            console.log(data);
             $.ajax({
-                url:'/usersManagement/save',
+                url:'/categoryManagement/save',
                 type: 'post',
                 data: data.field,
                 success:function (){
@@ -62,9 +60,6 @@
                     layer.alert("保存失败");
                 }
             })
-
-
-
             return false;
         });
 
