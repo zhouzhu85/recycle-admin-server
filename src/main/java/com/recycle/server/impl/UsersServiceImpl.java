@@ -77,7 +77,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void deleteUsersById(List<Long> idList) {
+    public void deleteUsersById(List<String> idList) {
         usersMapper.deleteBatchIds(idList);
     }
 }

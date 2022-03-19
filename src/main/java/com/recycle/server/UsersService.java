@@ -16,5 +16,5 @@ public interface UsersService{
 
     Users findUsersById(Long id);
 
-    void deleteUsersById(List<Long> idList);
+    void deleteUsersById(List<String> idList);
 }

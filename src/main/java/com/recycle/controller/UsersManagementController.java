@@ -65,8 +65,7 @@ public class UsersManagementController {
         if (StringUtils.isEmpty(idStr)){
             return RecycleResult.error("删除客户不存在");
         }
-        List<Long> idList = Arrays.asList(idStr.split(",")).stream().map(id ->
-                Long.valueOf(id)).collect(Collectors.toList());
+        List<String> idList = Arrays.asList(idStr.split(","));
         usersService.deleteUsersById(idList);
         return RecycleResult.ok();
     }

@@ -7,6 +7,7 @@ import com.recycle.model.Users;
 import com.recycle.model.vo.CategoryVo;
 import com.recycle.model.vo.UsersVo;
 import com.recycle.server.CategoryService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("categoryManagement")
@@ -31,7 +34,11 @@ public class CategoryManagementController {
     }
 
     @GetMapping("addEdit")
-    public ModelAndView addEditPage(ModelAndView modelAndView){
+    public ModelAndView addEditPage(ModelAndView modelAndView,String id){
+        if (StringUtils.isNotEmpty(id)){
+            Category category=categoryService.findCategoryById(id);
+            modelAndView.addObject("category",category);
+        }
         modelAndView.setViewName("/page/category/addEdit");
         return modelAndView;
     }
@@ -44,8 +51,19 @@ public class CategoryManagementController {
     }
     @GetMapping("list")
     @ResponseBody
-    public RecycleResult getUsersList(CategoryVo categoryVo){
+    public RecycleResult getCategoryList(CategoryVo categoryVo){
         IPage<Users> categoryPageList = categoryService.findCategoryByPage(categoryVo);
         return RecycleResult.ok(categoryPageList.getRecords(),categoryPageList.getTotal());
+    }
+
+    @GetMapping("delete")
+    @ResponseBody
+    public RecycleResult deleteCategory(String idsStr){
+        if (StringUtils.isEmpty(idsStr)){
+            return RecycleResult.error("该分类不存在");
+        }
+        List<String> idsList= Arrays.asList(idsStr.split(","));
+        categoryService.batchDeleteById(idsList);
+        return RecycleResult.ok();
     }
 }

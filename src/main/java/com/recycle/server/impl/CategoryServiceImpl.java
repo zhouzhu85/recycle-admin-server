@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author zhouzhu
@@ -50,5 +51,20 @@ public class CategoryServiceImpl implements CategoryService {
         }
         IPage<Users> usersIPage = categoryMapper.selectPage(page, queryWrapper);
         return usersIPage;
+    }
+
+    @Override
+    public Category findCategoryById(String id) {
+        return categoryMapper.selectById(id);
+    }
+
+    @Override
+    public void deleteById(String id) {
+        categoryMapper.deleteById(id);
+    }
+
+    @Override
+    public void batchDeleteById(List<String> idsList) {
+        categoryMapper.deleteBatchIds(idsList);
     }
 }
