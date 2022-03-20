@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class OrderManagementController {
     @GetMapping("index")
     public ModelAndView indexPage(ModelAndView modelAndView){
-        modelAndView.setViewName("/page/orderManagement");
+        modelAndView.setViewName("/page/order/orderManagement");
         return modelAndView;
     }
 }

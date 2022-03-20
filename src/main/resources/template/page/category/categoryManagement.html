@@ -9,7 +9,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">分类名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="username" autocomplete="off" class="layui-input">
+                                <input type="text" name="categoryName" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -71,18 +71,13 @@
 
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
-            var result = JSON.stringify(data.field);
-            layer.alert(result, {
-                title: '最终的搜索信息'
-            });
-
             //执行搜索重载
             table.reload('currentTableId', {
                 page: {
                     curr: 1
                 }
                 , where: {
-                    searchParams: result
+                    categoryName: data.field.categoryName
                 }
             }, 'data');
 
@@ -116,7 +111,30 @@
             } else if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+                var idsStr="";
+                for (var i = 0; i < data.length; i++) {
+                    var id=data[i].id;
+                    if (idsStr!=""){
+                        idsStr+=","+id;
+                    }else {
+                        idsStr+=id;
+                    }
+                }
+                layer.confirm('是否批量删所勾选的分类', function (index) {
+                    $.ajax({
+                        url:'categoryManagement/delete',
+                        type:'get',
+                        data:{"idsStr":idsStr},
+                        success:function (){
+                            layer.msg("删除成功")
+                            layer.close(index);
+                            reloadTable();
+                        },
+                        error:function (){
+                            layer.alert("删除失败！")
+                        }
+                    })
+                });
             }
         });
 
@@ -155,6 +173,7 @@
                         type:'get',
                         data:{"idsStr":data.id},
                         success:function (){
+                            layer.msg("删除成功")
                             obj.del();
                             layer.close(index);
                         },
@@ -165,16 +184,11 @@
                 });
             }
         });
-        function reloadTable(dataForm){
-            if (dataForm==undefined){
-                dataForm={};
-            }
-            console.log(dataForm);
+        function reloadTable(){
             table.reload('currentTableId',{
                 page:{
                     curr: 1 //重新从第1页加载
-                },
-                where: dataForm
+                }
             })
         }
     });

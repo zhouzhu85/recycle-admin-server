@@ -164,20 +164,26 @@
             }
         });
         function reloadTable(dataForm){
-            if (dataForm==undefined){
-                dataForm={};
-            }
-            console.log(dataForm);
             table.reload('currentTableId',{
                 page:{
                     curr: 1 //重新从第1页加载
-                },
-                where: dataForm
+                }
             })
         }
-        $('.layui-btn.layui-btn-primary').click(function (){
-            var dataForm=form.val('data-form');
-            reloadTable(dataForm);
-        })
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            //执行搜索重载
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    userName: data.field.userName,
+                    phone: data.field.phone
+                }
+            }, 'data');
+
+            return false;
+        });
     });
 </script>

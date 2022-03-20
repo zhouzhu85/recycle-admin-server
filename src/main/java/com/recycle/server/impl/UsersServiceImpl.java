@@ -51,7 +51,7 @@ public class UsersServiceImpl implements UsersService {
             queryWrapper.like("user_name", usersVo.getUserName());
         }
         if (StringUtils.isNotEmpty(usersVo.getPhone())){
-            queryWrapper.eq("phone",usersVo.getPhone());
+            queryWrapper.like("phone",usersVo.getPhone());
         }
         IPage<Users> usersIPage = usersMapper.selectPage(page, queryWrapper);
         return usersIPage;
