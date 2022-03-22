@@ -13,4 +13,9 @@ public class OrderManagementController {
         modelAndView.setViewName("/page/order/orderManagement");
         return modelAndView;
     }
+    @GetMapping("addEdit")
+    public ModelAndView addEdit(ModelAndView modelAndView){
+        modelAndView.setViewName("/page/order/addEdit");
+        return modelAndView;
+    }
 }
