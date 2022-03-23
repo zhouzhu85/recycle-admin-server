@@ -1,60 +1,165 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="layuimini-main">
     <div class="layui-form layuimini-form">
-    <div class="layui-row">
-
-        <div class="layui-col-xs6">
-            <div class="layui-col-md12">
-                <h3 style="text-align: center;margin-bottom: 20px">美境废品回收站收据</h3>
-            </div>
-            <div class="layui-col-md6">
-
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">回收客</label>
-                        <div class="layui-input-inline">
-                            <select name="modules" lay-verify="required" lay-search="">
-                                <option value="">直接选择或搜索选择</option>
-                                <option value="1">layer</option>
-                                <option value="2">form</option>
-                                <option value="3">layim</option>
-                                <option value="4">element</option>
-                                <option value="5">laytpl</option>
-                                <option value="6">upload</option>
-                                <option value="7">laydate</option>
-                                <option value="8">laypage</option>
-                                <option value="9">flow</option>
-                                <option value="10">util</option>
-                                <option value="11">code</option>
-                                <option value="12">tree</option>
-                                <option value="13">layedit</option>
-                                <option value="14">nav</option>
-                                <option value="15">tab</option>
-                                <option value="16">table</option>
-                                <option value="17">select</option>
-                                <option value="18">checkbox</option>
-                                <option value="19">switch</option>
-                                <option value="20">radio</option>
-                            </select>
+        <div class="layui-row">
+            <div>
+                <div class="layui-col-md12">
+                    <h2 style="text-align: center;margin-bottom: 20px">美境废品回收站收据</h2>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">回收客</label>
+                            <div class="layui-input-inline">
+                                <select name="modules" lay-verify="required" lay-search="">
+                                    <option value="">直接选择或搜索选择</option>
+                                    <option value="1">layer</option>
+                                    <option value="2">form</option>
+                                    <option value="3">layim</option>
+                                    <option value="4">element</option>
+                                    <option value="5">laytpl</option>
+                                    <option value="6">upload</option>
+                                    <option value="7">laydate</option>
+                                    <option value="8">laypage</option>
+                                    <option value="9">flow</option>
+                                    <option value="10">util</option>
+                                    <option value="11">code</option>
+                                    <option value="12">tree</option>
+                                    <option value="13">layedit</option>
+                                    <option value="14">nav</option>
+                                    <option value="15">tab</option>
+                                    <option value="16">table</option>
+                                    <option value="17">select</option>
+                                    <option value="18">checkbox</option>
+                                    <option value="19">switch</option>
+                                    <option value="20">radio</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="layui-col-md6">
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">收据日期</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                <div class="layui-col-md6">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">收据日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                            </div>
                         </div>
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md4">
+                        <h3 style="text-align: center;border: 1px solid #e6e6e6;">废品分类</h3>
+                    </div>
+                    <div class="layui-col-md4">
+                        <h3 style="text-align: center;border: 1px solid #e6e6e6;">废品斤数</h3>
+                    </div>
+                    <div class="layui-col-md4">
+                        <h3 style="text-align: center;border: 1px solid #e6e6e6;">废品金额</h3>
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md4">
+                        <select name="modules" lay-verify="required" lay-search="">
+                            <option value="">直接选择或搜索选择废品分类</option>
+                            <option value="1">layer</option>
+                            <option value="2">form</option>
+                            <option value="3">layim</option>
+                            <option value="4">element</option>
+                            <option value="5">laytpl</option>
+                            <option value="6">upload</option>
+                            <option value="7">laydate</option>
+                            <option value="8">laypage</option>
+                            <option value="9">flow</option>
+                            <option value="10">util</option>
+                            <option value="11">code</option>
+                            <option value="12">tree</option>
+                            <option value="13">layedit</option>
+                            <option value="14">nav</option>
+                            <option value="15">tab</option>
+                            <option value="16">table</option>
+                            <option value="17">select</option>
+                            <option value="18">checkbox</option>
+                            <option value="19">switch</option>
+                            <option value="20">radio</option>
+                        </select>
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md4">
+                        <select name="modules" lay-verify="required" lay-search="">
+                            <option value="">直接选择或搜索选择</option>
+                            <option value="1">layer</option>
+                            <option value="2">form</option>
+                            <option value="3">layim</option>
+                            <option value="4">element</option>
+                            <option value="5">laytpl</option>
+                            <option value="6">upload</option>
+                            <option value="7">laydate</option>
+                            <option value="8">laypage</option>
+                            <option value="9">flow</option>
+                            <option value="10">util</option>
+                            <option value="11">code</option>
+                            <option value="12">tree</option>
+                            <option value="13">layedit</option>
+                            <option value="14">nav</option>
+                            <option value="15">tab</option>
+                            <option value="16">table</option>
+                            <option value="17">select</option>
+                            <option value="18">checkbox</option>
+                            <option value="19">switch</option>
+                            <option value="20">radio</option>
+                        </select>
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md4">
+                        <select name="modules" lay-verify="required" lay-search="">
+                            <option value="">直接选择或搜索选择</option>
+                            <option value="1">layer</option>
+                            <option value="2">form</option>
+                            <option value="3">layim</option>
+                            <option value="4">element</option>
+                            <option value="5">laytpl</option>
+                            <option value="6">upload</option>
+                            <option value="7">laydate</option>
+                            <option value="8">laypage</option>
+                            <option value="9">flow</option>
+                            <option value="10">util</option>
+                            <option value="11">code</option>
+                            <option value="12">tree</option>
+                            <option value="13">layedit</option>
+                            <option value="14">nav</option>
+                            <option value="15">tab</option>
+                            <option value="16">table</option>
+                            <option value="17">select</option>
+                            <option value="18">checkbox</option>
+                            <option value="19">switch</option>
+                            <option value="20">radio</option>
+                        </select>
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="layui-col-xs6">
-            <div >6/12</div>
-        </div>
-    </div>
     </div>
 </div>
 <script>
