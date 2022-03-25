@@ -128,8 +128,16 @@
                     maxmin:true,
                     shadeClose: true,
                     area: [(openWH[0]/2) + 'px', openWH[1] + 'px'],
-                    offset: [openWH[2]/2+'px', openWH[3]*2+150 + 'px'],
+                    offset: [openWH[2]/2+'px', openWH[3]*2+100 + 'px'],
                     content: content,
+                    btn: ['提交收据','新增行数','取消提交'],
+                    yes: function (){
+
+                    },
+                    btn2: function (){
+                        window._active.addRowHtml();
+                        return false;
+                    }
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
