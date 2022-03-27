@@ -67,4 +67,10 @@ public class CategoryServiceImpl implements CategoryService {
     public void batchDeleteById(List<String> idsList) {
         categoryMapper.deleteBatchIds(idsList);
     }
+
+    @Override
+    public List<Category> findAll() {
+        QueryWrapper wrapper=new QueryWrapper();
+        return categoryMapper.selectList(wrapper);
+    }
 }

@@ -12,7 +12,7 @@
                             <label class="layui-form-label">回收客</label>
                             <div class="layui-input-inline">
                                 <select name="modules" lay-verify="required" lay-search="">
-                                    <option value="">直接选择或搜索选择</option>
+                                    <option value="">选择或搜索分类</option>
                                     <option value="1">layer</option>
                                     <option value="2">form</option>
                                     <option value="3">layim</option>
@@ -60,145 +60,167 @@
                     </div>
                 </div>
                 <div class="layui-row">
-                    <div class="layui-col-md4">
-                        <select name="modules" lay-verify="required" lay-search="">
-                            <option value="">直接选择或搜索选择废品分类</option>
-                            <option value="1">layer</option>
-                            <option value="2">form</option>
-                            <option value="3">layim</option>
-                            <option value="4">element</option>
-                            <option value="5">laytpl</option>
-                            <option value="6">upload</option>
-                            <option value="7">laydate</option>
-                            <option value="8">laypage</option>
-                            <option value="9">flow</option>
-                            <option value="10">util</option>
-                            <option value="11">code</option>
-                            <option value="12">tree</option>
-                            <option value="13">layedit</option>
-                            <option value="14">nav</option>
-                            <option value="15">tab</option>
-                            <option value="16">table</option>
-                            <option value="17">select</option>
-                            <option value="18">checkbox</option>
-                            <option value="19">switch</option>
-                            <option value="20">radio</option>
+                    <div class="layui-col-md4 selectClass">
+                        <select name="selectUnitValue" lay-verify="required" lay-search="">
+                            <option value="">选择或搜索分类</option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}"></option>
                         </select>
                     </div>
                     <div class="layui-col-md4">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入斤数" class="layui-input" oninput="getInputValue(this)">
                     </div>
-                    <div class="layui-col-md4">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    <div class="layui-col-md4 amountClass">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-row">
-                    <div class="layui-col-md4">
-                        <select name="modules" lay-verify="required" lay-search="">
-                            <option value="">直接选择或搜索选择</option>
-                            <option value="1">layer</option>
-                            <option value="2">form</option>
-                            <option value="3">layim</option>
-                            <option value="4">element</option>
-                            <option value="5">laytpl</option>
-                            <option value="6">upload</option>
-                            <option value="7">laydate</option>
-                            <option value="8">laypage</option>
-                            <option value="9">flow</option>
-                            <option value="10">util</option>
-                            <option value="11">code</option>
-                            <option value="12">tree</option>
-                            <option value="13">layedit</option>
-                            <option value="14">nav</option>
-                            <option value="15">tab</option>
-                            <option value="16">table</option>
-                            <option value="17">select</option>
-                            <option value="18">checkbox</option>
-                            <option value="19">switch</option>
-                            <option value="20">radio</option>
+                    <div class="layui-col-md4 selectClass">
+                        <select name="selectUnitValue" lay-verify="required" lay-search="">
+                            <option value="">选择或搜索分类</option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}"></option>
                         </select>
                     </div>
                     <div class="layui-col-md4">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入斤数" class="layui-input" oninput="getInputValue(this)">
                     </div>
-                    <div class="layui-col-md4">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    <div class="layui-col-md4 amountClass">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-row">
-                    <div class="layui-col-md4">
-                        <select name="modules" lay-verify="required" lay-search="">
-                            <option value="">直接选择或搜索选择</option>
-                            <option value="1">layer</option>
-                            <option value="2">form</option>
-                            <option value="3">layim</option>
-                            <option value="4">element</option>
-                            <option value="5">laytpl</option>
-                            <option value="6">upload</option>
-                            <option value="7">laydate</option>
-                            <option value="8">laypage</option>
-                            <option value="9">flow</option>
-                            <option value="10">util</option>
-                            <option value="11">code</option>
-                            <option value="12">tree</option>
-                            <option value="13">layedit</option>
-                            <option value="14">nav</option>
-                            <option value="15">tab</option>
-                            <option value="16">table</option>
-                            <option value="17">select</option>
-                            <option value="18">checkbox</option>
-                            <option value="19">switch</option>
-                            <option value="20">radio</option>
+                    <div class="layui-col-md4 selectClass">
+                        <select name="selectUnitValue" lay-verify="required" lay-search="">
+                            <option value="">选择或搜索分类</option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}"></option>
                         </select>
                     </div>
                     <div class="layui-col-md4">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入斤数" class="layui-input" oninput="getInputValue(this)">
+                    </div>
+                    <div class="layui-col-md4 amountClass">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md4 selectClass">
+                        <select name="selectUnitValue" lay-verify="required" lay-search="">
+                            <option value="">选择或搜索分类</option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}"></option>
+                        </select>
                     </div>
                     <div class="layui-col-md4">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入斤数" class="layui-input" oninput="getInputValue(this)">
+                    </div>
+                    <div class="layui-col-md4 amountClass">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md4 selectClass">
+                        <select name="selectUnitValue" lay-verify="required" lay-search="">
+                            <option value="">选择或搜索分类</option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}"></option>
+                        </select>
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入斤数" class="layui-input" oninput="getInputValue(this)">
+                    </div>
+                    <div class="layui-col-md4 amountClass">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md4 selectClass">
+                        <select name="selectUnitValue" lay-verify="required" lay-search="">
+                            <option value="">选择或搜索分类</option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}"></option>
+                        </select>
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入斤数" class="layui-input" oninput="getInputValue(this)">
+                    </div>
+                    <div class="layui-col-md4 amountClass">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md4 selectClass">
+                        <select name="selectUnitValue" lay-verify="required" lay-search="">
+                            <option value="">选择或搜索分类</option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}"></option>
+                        </select>
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入斤数" class="layui-input" oninput="getInputValue(this)">
+                    </div>
+                    <div class="layui-col-md4 amountClass">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md4 selectClass">
+                        <select name="selectUnitValue" lay-verify="required" lay-search="">
+                            <option value="">选择或搜索分类</option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}"></option>
+                        </select>
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入斤数" class="layui-input" oninput="getInputValue(this)">
+                    </div>
+                    <div class="layui-col-md4 amountClass">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md4 selectClass">
+                        <select name="selectUnitValue" lay-verify="required" lay-search="">
+                            <option value="">选择或搜索分类</option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}"></option>
+                        </select>
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入斤数" class="layui-input" oninput="getInputValue(this)">
+                    </div>
+                    <div class="layui-col-md4 amountClass">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md4 selectClass">
+                        <select name="selectUnitValue" lay-verify="required" lay-search="">
+                            <option value="">选择或搜索分类</option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}"></option>
+                        </select>
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入斤数" class="layui-input" oninput="getInputValue(this)">
+                    </div>
+                    <div class="layui-col-md4 amountClass">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
                     </div>
                 </div>
             </div>
-<!--            <div style="position: absolute;right: 5px;bottom: 5px">-->
-<!--                <button type="button" class="layui-btn layui-btn-normal" id="addRow">新增行数</button>-->
-<!--                <button type="button" class="layui-btn">保存收据</button>-->
-<!--                <button type="button" class="layui-btn layui-btn-primary">取消保存</button>-->
-<!--            </div>-->
+            <div style="float: right;margin-top: 20px">
+                <span>总计金额：</span><em id="allAmount">0</em>
+            </div>
         </div>
     </div>
 </div>
 <script id="rowHtml" type="text/html">
     <div class="layui-row">
-        <div class="layui-col-md4">
-            <select name="modules" lay-verify="required" lay-search="">
-                <option value="">直接选择或搜索选择</option>
-                <option value="1">layer</option>
-                <option value="2">form</option>
-                <option value="3">layim</option>
-                <option value="4">element</option>
-                <option value="5">laytpl</option>
-                <option value="6">upload</option>
-                <option value="7">laydate</option>
-                <option value="8">laypage</option>
-                <option value="9">flow</option>
-                <option value="10">util</option>
-                <option value="11">code</option>
-                <option value="12">tree</option>
-                <option value="13">layedit</option>
-                <option value="14">nav</option>
-                <option value="15">tab</option>
-                <option value="16">table</option>
-                <option value="17">select</option>
-                <option value="18">checkbox</option>
-                <option value="19">switch</option>
-                <option value="20">radio</option>
-            </select>
-        </div>
-        <div class="layui-col-md4">
-            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-        </div>
-        <div class="layui-col-md4">
-            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        <div class="layui-row">
+            <div class="layui-col-md4 selectClass">
+                <select name="selectUnitValue" lay-verify="required" lay-search="">
+                    <option value="">选择或搜索分类</option>
+                    <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}"></option>
+                </select>
+            </div>
+            <div class="layui-col-md4">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入斤数" class="layui-input" oninput="getInputValue(this)">
+            </div>
+            <div class="layui-col-md4 amountClass">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+            </div>
         </div>
     </div>
 </script>
@@ -266,4 +288,16 @@
         }
         window.parent._active = active;
     });
+   var $ = layui.$;
+    function getInputValue(that){
+        var numValue = $(that).val();
+        var unitValue = $(that).parents().siblings(".selectClass").children().val();
+        $(that).parents().siblings(".amountClass").children().val((numValue*100)*(unitValue*100)/10000);
+        var allAmount=0;
+        $(".layui-row").children(".amountClass").each(function (){
+            var amount = $(this).children().val();
+            allAmount=allAmount+amount*10000;
+        })
+        $("#allAmount").html(allAmount/10000);
+    }
 </script>

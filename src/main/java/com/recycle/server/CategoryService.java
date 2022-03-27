@@ -43,4 +43,10 @@ public interface CategoryService {
      * @param idsStr
      */
     void batchDeleteById(List<String> idsStr);
+
+    /**
+     * 查询所有分类
+     * @return
+     */
+    List<Category> findAll();
 }
