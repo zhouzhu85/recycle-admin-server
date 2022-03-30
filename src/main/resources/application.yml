@@ -11,13 +11,6 @@ spring:
     prefix: classpath:/template
   mvc:
     static-path-pattern: /static/**
-  ## 数据库驱动配置
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/recyle_admin_db?characterEncoding=utf8
-    username: root
-#    password: zhouzhu
-    password: 123456
   web:
     resources:
       static-locations: classpath:/static
