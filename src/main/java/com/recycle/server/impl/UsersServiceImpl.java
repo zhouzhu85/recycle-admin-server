@@ -33,7 +33,8 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public List<Users> findAllUsers() {
-        return usersMapper.findAllUsers();
+        QueryWrapper wrapper=new QueryWrapper();
+        return usersMapper.selectList(wrapper);
     }
 
     @Override
