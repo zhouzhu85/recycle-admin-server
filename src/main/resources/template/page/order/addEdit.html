@@ -40,7 +40,7 @@
                         <h3 style="text-align: center;border: 1px solid #e6e6e6;">废品金额</h3>
                     </div>
                 </div>
-                <div class="layui-row" th:each="rowNum:${#numbers.sequence(0,9)}">
+                <div class="layui-row rowHtmlClass" th:each="rowNum:${#numbers.sequence(0,9)}">
                     <div class="layui-col-md4 selectClass">
                         <select name="" lay-verify="required" lay-search="" lay-filter="categoryFilter">
                             <option value="">选择或搜索分类</option>
@@ -124,12 +124,27 @@
 
         form.on('select(categoryFilter)', function(data){
             var selectThis=$(data.elem); //得到select原始DOM对象
-            var categoryId=data.value.split("-")[1];
-            selectThis.attr("name","category_"+categoryId)
-            selectThis.parents().siblings(".cattyClass").children().attr("name","catty_"+categoryId)
-            selectThis.parents().siblings(".amountClass").children().attr("name","amount_"+categoryId)
-            // console.log(data.value); //得到被选中的值
-            // console.log(data.othis); //得到美化后的DOM对象
+            if (data.value!=""){
+                var categoryId=data.value.split("-")[1];
+                var hasSelect=false;
+                selectThis.parents().parents().siblings(".rowHtmlClass").each(function (){
+                    var otherSelectThat=$(this).children().children();
+                    var otherSelectName=otherSelectThat.attr("name");
+                    if (otherSelectName=="category_"+categoryId){
+                        layer.msg("已经选择该分类了");
+                        selectThis.attr("name","");
+                        selectThis.val("");
+                        hasSelect=true;
+                    }
+                })
+                if (!hasSelect){
+                    selectThis.attr("name","category_"+categoryId)
+                    selectThis.parents().siblings(".cattyClass").children().attr("name","catty_"+categoryId)
+                    selectThis.parents().siblings(".amountClass").children().attr("name","amount_"+categoryId)
+                }
+                // console.log(data.value); //得到被选中的值
+                // console.log(data.othis); //得到美化后的DOM对象
+            }
         });
 
 
@@ -147,7 +162,19 @@
             },
             submitForm:function (){
                 var formData=form.val("orderForm");
+                var formDataStr=JSON.stringify(formData);
                 console.log(formData);
+                $.ajax({
+                    url:'/orderManagement/save',
+                    type:'post',
+                    data: {"dataJson":formDataStr},
+                    success:function (){
+
+                    },
+                    error:function (){
+
+                    }
+                })
             }
         }
         window.parent._active = active;

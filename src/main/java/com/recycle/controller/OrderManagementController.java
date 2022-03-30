@@ -1,13 +1,16 @@
 package com.recycle.controller;
 
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.recycle.model.Category;
+import com.recycle.model.RecycleResult;
 import com.recycle.model.Users;
 import com.recycle.server.CategoryService;
 import com.recycle.server.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -53,5 +56,11 @@ public class OrderManagementController {
         modelAndView.addObject("newCategoryList",newCategoryList);
         modelAndView.setViewName("/page/order/addEdit");
         return modelAndView;
+    }
+    @PostMapping("save")
+    @ResponseBody
+    public RecycleResult saveOrder(String dataJson){
+        Map<String,Object> map = JSONUtil.toBean(dataJson, Map.class);
+        return RecycleResult.ok();
     }
 }
