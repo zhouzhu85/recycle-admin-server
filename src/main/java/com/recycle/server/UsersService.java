@@ -1,20 +1,19 @@
 package com.recycle.server;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.recycle.model.Users;
+import com.recycle.model.TbUsers;
 import com.recycle.model.vo.UsersVo;
 
 import java.util.List;
 
 public interface UsersService{
-    void insertUsers(Users users);
-    List<Users> findAllUsers();
+    void insertUsers(TbUsers users);
+    List<TbUsers> findAllUsers();
     Integer findAllUsersCount();
-    IPage<Users> findUsersByPage(UsersVo usersVo);
-    void saveOrUpdate(Users users);
+    IPage<TbUsers> findUsersByPage(UsersVo usersVo);
+    void saveOrUpdate(TbUsers users);
 
-    Users findUsersById(Long id);
+    TbUsers findUsersById(Long id);
 
     void deleteUsersById(List<String> idList);
 }

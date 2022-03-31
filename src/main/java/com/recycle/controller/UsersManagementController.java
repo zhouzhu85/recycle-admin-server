@@ -2,7 +2,7 @@ package com.recycle.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.recycle.model.RecycleResult;
-import com.recycle.model.Users;
+import com.recycle.model.TbUsers;
 import com.recycle.model.vo.UsersVo;
 import com.recycle.server.UsersService;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("usersManagement")
@@ -37,7 +36,7 @@ public class UsersManagementController {
 
     @GetMapping("edit")
     public ModelAndView editPage(ModelAndView modelAndView,UsersVo usersVo){
-        Users users=usersService.findUsersById(usersVo.getId());
+        TbUsers users=usersService.findUsersById(usersVo.getId());
         modelAndView.addObject("users",users);
         modelAndView.setViewName("/page/users/edit");
         return modelAndView;
@@ -48,13 +47,13 @@ public class UsersManagementController {
     public RecycleResult getUsersList(UsersVo usersVo){
 //        List<Users> allUsers = usersService.findAllUsers();
 //        Integer allUsersCount = usersService.findAllUsersCount();
-        IPage<Users> usersIPage = usersService.findUsersByPage(usersVo);
+        IPage<TbUsers> usersIPage = usersService.findUsersByPage(usersVo);
         return RecycleResult.ok(usersIPage.getRecords(),usersIPage.getTotal());
     }
 
     @PostMapping("save")
     @ResponseBody
-    public RecycleResult saveUsers(Users users){
+    public RecycleResult saveUsers(TbUsers users){
         usersService.saveOrUpdate(users);
         return RecycleResult.ok("保存成功");
     }

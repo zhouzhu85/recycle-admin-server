@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 废品分类
@@ -14,7 +15,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+public class TbCategory {
     private String id;
     /**
      * 分类名称
@@ -28,4 +29,12 @@ public class Category {
      * 单位值
      */
     private BigDecimal unitValue;
+    /**
+     * 创建时间
+     */
+    private Date createDate;
+    /**
+     * 更新时间
+     */
+    private Date updateDate;
 }

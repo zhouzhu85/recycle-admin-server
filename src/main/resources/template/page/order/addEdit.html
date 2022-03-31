@@ -161,7 +161,9 @@
                 });
             },
             submitForm:function (){
+                var allAmount=$("#allAmount").html();
                 var formData=form.val("orderForm");
+                formData.allAmount=allAmount;
                 var formDataStr=JSON.stringify(formData);
                 console.log(formData);
                 $.ajax({
@@ -169,7 +171,12 @@
                     type:'post',
                     data: {"dataJson":formDataStr},
                     success:function (){
+                        var index = layer.alert("保存成功", function () {
+                            // 关闭弹出层
+                            layer.close(index);
+                            layer.close(parentIndex);
 
+                        });
                     },
                     error:function (){
 

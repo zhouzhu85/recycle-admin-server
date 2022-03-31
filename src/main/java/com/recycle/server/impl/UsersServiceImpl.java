@@ -1,20 +1,18 @@
 package com.recycle.server.impl;
 
 import cn.hutool.core.lang.Snowflake;
-import cn.hutool.core.util.IdUtil;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.recycle.mapper.UsersMapper;
-import com.recycle.model.Users;
+import com.recycle.model.TbUsers;
 import com.recycle.model.vo.UsersVo;
 import com.recycle.server.UsersService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,12 +25,12 @@ public class UsersServiceImpl implements UsersService {
     private Snowflake snowflake;
 
     @Override
-    public void insertUsers(Users users) {
+    public void insertUsers(TbUsers users) {
         usersMapper.insertUsers(users);
     }
 
     @Override
-    public List<Users> findAllUsers() {
+    public List<TbUsers> findAllUsers() {
         QueryWrapper wrapper=new QueryWrapper();
         return usersMapper.selectList(wrapper);
     }
@@ -43,7 +41,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public IPage<Users> findUsersByPage(UsersVo usersVo) {
+    public IPage<TbUsers> findUsersByPage(UsersVo usersVo) {
         Page page=new Page();
         page.setCurrent(usersVo.getPage());
         page.setSize(usersVo.getLimit());
@@ -54,26 +52,29 @@ public class UsersServiceImpl implements UsersService {
         if (StringUtils.isNotEmpty(usersVo.getPhone())){
             queryWrapper.like("phone",usersVo.getPhone());
         }
-        IPage<Users> usersIPage = usersMapper.selectPage(page, queryWrapper);
+        IPage<TbUsers> usersIPage = usersMapper.selectPage(page, queryWrapper);
         return usersIPage;
     }
 
     @Override
-    public void saveOrUpdate(Users users) {
+    public void saveOrUpdate(TbUsers users) {
         String id = users.getId();
         if (id==null){
             String uuid = snowflake.nextIdStr();
             users.setId(uuid);
+            users.setCreateDate(new Date());
+            users.setUpdateDate(new Date());
             usersMapper.insert(users);
         }else {
-            QueryWrapper<Users> wrapper=new QueryWrapper<>();
+            QueryWrapper<TbUsers> wrapper=new QueryWrapper<>();
             wrapper.eq("id",users.getId());
+            users.setUpdateDate(new Date());
             usersMapper.update(users,wrapper);
         }
     }
 
     @Override
-    public Users findUsersById(Long id) {
+    public TbUsers findUsersById(Long id) {
         return usersMapper.selectById(id);
     }
 

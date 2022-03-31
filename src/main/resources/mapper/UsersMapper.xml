@@ -3,10 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.recycle.mapper.UsersMapper">
-    <insert id="insertUsers" parameterType="com.recycle.model.Users">
+    <insert id="insertUsers" parameterType="com.recycle.model.TbUsers">
         insert into users (user_name,phone,sex) values (#{userName},#{phone},#{sex})
     </insert>
-    <select id="findAllUsers" resultType="com.recycle.model.Users">
+    <select id="findAllUsers" resultType="com.recycle.model.TbUsers">
         select id,user_name,phone,sex from users
     </select>
     <select id="findAllUsersCount" resultType="java.lang.Integer">

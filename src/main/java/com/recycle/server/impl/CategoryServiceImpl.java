@@ -5,14 +5,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.recycle.mapper.CategoryMapper;
-import com.recycle.model.Category;
-import com.recycle.model.Users;
+import com.recycle.model.TbCategory;
+import com.recycle.model.TbUsers;
 import com.recycle.model.vo.CategoryVo;
 import com.recycle.server.CategoryService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,9 +30,11 @@ public class CategoryServiceImpl implements CategoryService {
     private Snowflake snowflake;
 
     @Override
-    public void saveCategory(Category category) {
+    public void saveCategory(TbCategory category) {
         if (StringUtils.isEmpty(category.getId())){
             category.setId(snowflake.nextIdStr());
+            category.setCreateDate(new Date());
+            category.setUpdateDate(new Date());
             categoryMapper.insert(category);
         }else{
             QueryWrapper queryWrapper=new QueryWrapper();
@@ -41,7 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public IPage<Users> findCategoryByPage(CategoryVo categoryVo) {
+    public IPage<TbUsers> findCategoryByPage(CategoryVo categoryVo) {
         Page page=new Page();
         page.setCurrent(categoryVo.getPage());
         page.setSize(categoryVo.getLimit());
@@ -49,12 +52,12 @@ public class CategoryServiceImpl implements CategoryService {
         if (StringUtils.isNotEmpty(categoryVo.getCategoryName())) {
             queryWrapper.like("category_name", categoryVo.getCategoryName());
         }
-        IPage<Users> usersIPage = categoryMapper.selectPage(page, queryWrapper);
+        IPage<TbUsers> usersIPage = categoryMapper.selectPage(page, queryWrapper);
         return usersIPage;
     }
 
     @Override
-    public Category findCategoryById(String id) {
+    public TbCategory findCategoryById(String id) {
         return categoryMapper.selectById(id);
     }
 
@@ -69,7 +72,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findAll() {
+    public List<TbCategory> findAll() {
         QueryWrapper wrapper=new QueryWrapper();
         return categoryMapper.selectList(wrapper);
     }

@@ -1,12 +1,12 @@
 package com.recycle.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.recycle.model.Users;
+import com.recycle.model.TbUsers;
 
 import java.util.List;
 
-public interface UsersMapper extends BaseMapper<Users> {
-    void insertUsers(Users users);
-    List<Users> findAllUsers();
+public interface UsersMapper extends BaseMapper<TbUsers> {
+    void insertUsers(TbUsers users);
+    List<TbUsers> findAllUsers();
     Integer findAllUsersCount();
 }

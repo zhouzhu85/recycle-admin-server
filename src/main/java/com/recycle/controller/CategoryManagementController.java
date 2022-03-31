@@ -1,11 +1,10 @@
 package com.recycle.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.recycle.model.Category;
+import com.recycle.model.TbCategory;
 import com.recycle.model.RecycleResult;
-import com.recycle.model.Users;
+import com.recycle.model.TbUsers;
 import com.recycle.model.vo.CategoryVo;
-import com.recycle.model.vo.UsersVo;
 import com.recycle.server.CategoryService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -36,7 +35,7 @@ public class CategoryManagementController {
     @GetMapping("addEdit")
     public ModelAndView addEditPage(ModelAndView modelAndView,String id){
         if (StringUtils.isNotEmpty(id)){
-            Category category=categoryService.findCategoryById(id);
+            TbCategory category=categoryService.findCategoryById(id);
             modelAndView.addObject("category",category);
         }
         modelAndView.setViewName("/page/category/addEdit");
@@ -45,14 +44,14 @@ public class CategoryManagementController {
 
     @PostMapping("save")
     @ResponseBody
-    public RecycleResult save(Category category){
+    public RecycleResult save(TbCategory category){
         categoryService.saveCategory(category);
         return RecycleResult.ok("保存成功");
     }
     @GetMapping("list")
     @ResponseBody
     public RecycleResult getCategoryList(CategoryVo categoryVo){
-        IPage<Users> categoryPageList = categoryService.findCategoryByPage(categoryVo);
+        IPage<TbUsers> categoryPageList = categoryService.findCategoryByPage(categoryVo);
         return RecycleResult.ok(categoryPageList.getRecords(),categoryPageList.getTotal());
     }
 
