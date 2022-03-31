@@ -1,7 +1,9 @@
 package com.recycle.controller;
 
 import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.recycle.model.*;
+import com.recycle.model.vo.OrderVo;
 import com.recycle.server.CategoryService;
 import com.recycle.server.OrderItemService;
 import com.recycle.server.OrderService;
@@ -99,5 +101,11 @@ public class OrderManagementController {
             return RecycleResult.error("系统异常");
         }
         return RecycleResult.ok();
+    }
+    @GetMapping("list")
+    @ResponseBody
+    public RecycleResult getOrderList(OrderVo orderVo){
+        IPage<TbOrder> orderIPage=orderService.findOrderList(orderVo);
+        return RecycleResult.ok(orderIPage.getRecords(),orderIPage.getTotal());
     }
 }

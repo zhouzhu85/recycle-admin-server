@@ -2,8 +2,11 @@ package com.recycle.server.impl;
 
 import cn.hutool.core.lang.Snowflake;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.recycle.mapper.OrderMapper;
 import com.recycle.model.TbOrder;
+import com.recycle.model.vo.OrderVo;
 import com.recycle.server.OrderService;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +40,15 @@ public class OrderServiceImpl implements OrderService {
             wrapper.eq("order_no",order.getOrderNo());
             orderMapper.update(order,wrapper);
         }
+    }
+
+    @Override
+    public IPage<TbOrder> findOrderList(OrderVo orderVo) {
+        Page page=new Page();
+        page.setCurrent(orderVo.getPage());
+        page.setSize(orderVo.getLimit());
+        QueryWrapper queryWrapper=new QueryWrapper();
+        IPage<TbOrder> orderPage = orderMapper.selectPage(page, queryWrapper);
+        return orderPage;
     }
 }

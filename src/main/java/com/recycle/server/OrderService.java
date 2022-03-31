@@ -1,6 +1,8 @@
 package com.recycle.server;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.recycle.model.TbOrder;
+import com.recycle.model.vo.OrderVo;
 
 /**
  * @author: zhouzhu
@@ -8,5 +10,16 @@ import com.recycle.model.TbOrder;
  * @description: 订单service
  */
 public interface OrderService {
+    /**
+     * 保存订单
+     * @param order
+     */
     void saveOrder(TbOrder order);
+
+    /**
+     * 查询订单
+     * @param orderVo
+     * @return
+     */
+    IPage<TbOrder> findOrderList(OrderVo orderVo);
 }
