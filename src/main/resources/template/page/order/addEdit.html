@@ -13,7 +13,8 @@
                             <div class="layui-input-inline">
                                 <select name="userNameId" lay-verify="required" lay-search="">
                                     <option value="">选择或搜索回收客</option>
-                                    <option th:each="users : ${newUsersList}" th:value="${users.nameId}" th:text="${users.userName}">layer</option>
+                                    <option th:if="${order==null}" th:each="users : ${newUsersList}" th:value="${users.nameId}" th:text="${users.userName}" ></option>
+                                    <option th:if="${order!=null}" th:each="users : ${newUsersList}" th:value="${users.nameId}" th:text="${users.userName}" th:selected="${#strings.contains(users.nameId,order.userId)}"></option>
                                 </select>
                             </div>
                         </div>
@@ -24,7 +25,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">收据日期</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="receiptDate" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                <input type="text" name="receiptDate" id="date" lay-verify="date" placeholder="年-月-日" autocomplete="off" class="layui-input" th:value="${order?.receiptDate}">
                             </div>
                         </div>
                     </div>
@@ -40,7 +41,7 @@
                         <h3 style="text-align: center;border: 1px solid #e6e6e6;">废品金额</h3>
                     </div>
                 </div>
-                <div class="layui-row rowHtmlClass" th:each="rowNum:${#numbers.sequence(0,9)}">
+                <div class="layui-row rowHtmlClass" th:each="rowNum:${#numbers.sequence(0,9)}" th:if="${orderItemList==null}">
                     <div class="layui-col-md4 selectClass">
                         <select name="" lay-verify="required" lay-search="" lay-filter="categoryFilter">
                             <option value="">选择或搜索分类</option>
@@ -54,11 +55,27 @@
                         <input type="text" name="" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
                     </div>
                 </div>
+                <div class="layui-row rowHtmlClass" th:if="${orderItemList!=null}" th:each="orderItem : ${orderItemList}">
+                    <div class="layui-col-md4 selectClass">
+                        <select th:name="${'category_'+orderItem.categoryId}" lay-verify="required" lay-search="" lay-filter="categoryFilter">
+                            <option value="">选择或搜索分类</option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}" th:selected="${#strings.contains(category.unitValue,orderItem.categoryId)}"></option>
+                        </select>
+                    </div>
+                    <div class="layui-col-md4 cattyClass">
+                        <input type="text" th:name="${'catty_'+orderItem.categoryId}" lay-verify="title" autocomplete="off" placeholder="请输入斤数" class="layui-input" oninput="getInputValue(this)" th:value="${orderItem.cattyNumber}">
+                    </div>
+                    <div class="layui-col-md4 amountClass">
+                        <input type="text" th:name="${'amount_'+orderItem.categoryId}" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" th:value="${orderItem.amount}">
+                    </div>
+                    <input th:name="${'orderItemNo_'+orderItem.categoryId}" hidden th:value="${orderItem?.orderItemNo}">
+                </div>
 
             </div>
             <div style="float: right;margin-top: 20px">
-                <span>总计金额：</span><em id="allAmount">0</em>
+                <span>总计金额：</span><em id="allAmount" th:text="${order?.allAmount}">0</em>
             </div>
+            <input name="orderNo" type="text" hidden th:value="${order?.orderNo}">
         </div>
     </div>
 </div>

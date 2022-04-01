@@ -156,7 +156,7 @@
             var data = obj.data;
             if (obj.event === 'edit') {
 
-                var content = miniPage.getHrefContent('page/table/add.html');
+                var content = miniPage.getHrefContent('/orderManagement/addEdit?orderNo='+data.orderNo);
                 var openWH = miniPage.getOpenWidthHeight();
 
                 var index = layer.open({
@@ -165,9 +165,20 @@
                     shade: 0.2,
                     maxmin:true,
                     shadeClose: true,
-                    area: [openWH[0] + 'px', openWH[1] + 'px'],
-                    offset: [openWH[2] + 'px', openWH[3] + 'px'],
+                    area: [(openWH[0]/2) + 'px', openWH[1] + 'px'],
+                    offset: [openWH[2]/2+'px', openWH[3]*2+100 + 'px'],
                     content: content,
+                    btn: ['提交收据','新增行数','取消提交'],
+                    yes: function (){
+                        window._active.submitForm();
+                    },
+                    btn2: function (){
+                        window._active.addRowHtml();
+                        return false;
+                    },
+                    end:function (){
+                        reloadTable();
+                    }
                 });
                 $(window).on("resize", function () {
                     layer.full(index);

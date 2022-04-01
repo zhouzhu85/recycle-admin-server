@@ -42,4 +42,11 @@ public class OrderItemServiceImpl implements OrderItemService {
             }
         }
     }
+
+    @Override
+    public List<TbOrderItem> findListByOrderNo(String orderNo) {
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.eq("order_no",orderNo);
+        return orderItemMapper.selectList(wrapper);
+    }
 }

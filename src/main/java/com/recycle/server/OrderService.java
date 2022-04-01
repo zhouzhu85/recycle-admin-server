@@ -22,4 +22,11 @@ public interface OrderService {
      * @return
      */
     IPage<TbOrder> findOrderList(OrderVo orderVo);
+
+    /**
+     * 查询单个订单
+     * @param orderNo
+     * @return
+     */
+    TbOrder findOneOrder(String orderNo);
 }

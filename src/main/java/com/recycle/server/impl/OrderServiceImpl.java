@@ -38,6 +38,7 @@ public class OrderServiceImpl implements OrderService {
         }else {
             QueryWrapper wrapper=new QueryWrapper();
             wrapper.eq("order_no",order.getOrderNo());
+            order.setUpdateDate(new Date());
             orderMapper.update(order,wrapper);
         }
     }
@@ -50,5 +51,12 @@ public class OrderServiceImpl implements OrderService {
         QueryWrapper queryWrapper=new QueryWrapper();
         IPage<TbOrder> orderPage = orderMapper.selectPage(page, queryWrapper);
         return orderPage;
+    }
+
+    @Override
+    public TbOrder findOneOrder(String orderNo) {
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.eq("order_no",orderNo);
+        return orderMapper.selectOne(wrapper);
     }
 }

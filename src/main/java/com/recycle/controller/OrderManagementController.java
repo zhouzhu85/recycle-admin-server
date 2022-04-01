@@ -8,6 +8,7 @@ import com.recycle.server.CategoryService;
 import com.recycle.server.OrderItemService;
 import com.recycle.server.OrderService;
 import com.recycle.server.UsersService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class OrderManagementController {
         return modelAndView;
     }
     @GetMapping("addEdit")
-    public ModelAndView addEdit(ModelAndView modelAndView){
+    public ModelAndView addEdit(ModelAndView modelAndView,String orderNo){
         List<TbUsers> usersList = usersService.findAllUsers();
         List<Object> newUsersList=new ArrayList<>();
         for (TbUsers users : usersList) {
@@ -57,6 +58,12 @@ public class OrderManagementController {
             categoryMap.put("unitName",(category.getCategoryName()+"（"+category.getUnitValue()+"/"+category.getUnitName()+"）"));
             newCategoryList.add(categoryMap);
         }
+        if (orderNo!=null){
+            TbOrder order=orderService.findOneOrder(orderNo);
+            List<TbOrderItem> orderItemList=orderItemService.findListByOrderNo(orderNo);
+            modelAndView.addObject("order",order);
+            modelAndView.addObject("orderItemList",orderItemList);
+        }
         modelAndView.addObject("newCategoryList",newCategoryList);
         modelAndView.setViewName("/page/order/addEdit");
         return modelAndView;
@@ -73,6 +80,10 @@ public class OrderManagementController {
             order.setUserId(userNameIdArray[1]);
             order.setAllAmount(new BigDecimal(paramMap.get("allAmount").toString()));
             order.setReceiptDate(new SimpleDateFormat("yyyy-MM-dd").parse(paramMap.get("receiptDate").toString()));
+            String orderNo = paramMap.get("orderNo").toString();
+            if (StringUtils.isNotEmpty(orderNo)){
+                order.setOrderNo(orderNo);
+            }
             orderService.saveOrder(order);
             List<TbOrderItem> orderItemList=new ArrayList<>();
             paramMap.forEach((key,value)->{
@@ -92,6 +103,9 @@ public class OrderManagementController {
                     }
                     if (key.contains("catty") && key.contains(orderItem.getCategoryId())){
                         orderItem.setCattyNumber(Long.parseLong(value.toString()));
+                    }
+                    if (key.contains("orderItemNo") && key.contains(orderItem.getCategoryId())){
+                        orderItem.setOrderItemNo(value.toString());
                     }
                 });
             }
