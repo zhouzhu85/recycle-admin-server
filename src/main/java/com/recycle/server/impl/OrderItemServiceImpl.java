@@ -8,8 +8,10 @@ import com.recycle.server.OrderItemService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author: zhouzhu
@@ -48,5 +50,13 @@ public class OrderItemServiceImpl implements OrderItemService {
         QueryWrapper wrapper=new QueryWrapper();
         wrapper.eq("order_no",orderNo);
         return orderItemMapper.selectList(wrapper);
+    }
+
+    @Override
+    public void deleteOrderItem(String orderNoStr) {
+        List<String> orderNoStrList = Arrays.asList(orderNoStr.split(","));
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.in("order_no",orderNoStrList);
+        orderItemMapper.delete(wrapper);
     }
 }

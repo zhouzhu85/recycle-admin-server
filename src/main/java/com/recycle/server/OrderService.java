@@ -29,4 +29,10 @@ public interface OrderService {
      * @return
      */
     TbOrder findOneOrder(String orderNo);
+
+    /**
+     * 批量删除订单
+     * @param orderNoStr
+     */
+    void deleteOrder(String orderNoStr);
 }

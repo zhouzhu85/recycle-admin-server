@@ -24,3 +24,8 @@ mybatis:
 # 用于雪花算法生成id
 datacenterId: 2
 workerId: 1
+
+#开启sql日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -7,27 +7,21 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户姓名</label>
+                            <label class="layui-form-label">订单号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="username" autocomplete="off" class="layui-input">
+                                <input type="text" name="orderNo" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户性别</label>
+                            <label class="layui-form-label">回收客</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="sex" autocomplete="off" class="layui-input">
+                                <input type="text" name="userName" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户城市</label>
+                            <label class="layui-form-label">收据日期</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="city" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">用户职业</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="classify" autocomplete="off" class="layui-input">
+                                <input type="text" name="receiptDate" id="date" placeholder="年-月-日" autocomplete="off" class="layui-input" th:value="${order?.receiptDate}">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -60,8 +54,12 @@
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table,
+            laydate = layui.laydate,
             miniPage = layui.miniPage;
-
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
         table.render({
             elem: '#currentTableId',
             url: '/orderManagement/list',
@@ -90,18 +88,15 @@
 
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
-            var result = JSON.stringify(data.field);
-            layer.alert(result, {
-                title: '最终的搜索信息'
-            });
-
             //执行搜索重载
             table.reload('currentTableId', {
                 page: {
                     curr: 1
                 }
                 , where: {
-                    searchParams: result
+                    orderNo: data.field.orderNo,
+                    userName: data.field.userName,
+                    receiptDate: data.field.receiptDate
                 }
             }, 'data');
 
@@ -143,7 +138,29 @@
             } else if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+                var orderNoStr="";
+                for (var i = 0; i < data.length; i++) {
+                    var orderNo=data[i].orderNo;
+                    if (orderNoStr!=""){
+                        orderNoStr+=","+orderNo;
+                    }else {
+                        orderNoStr+=orderNo;
+                    }
+                }
+                layer.confirm('是否批量删除订单', function (index) {
+                    $.ajax({
+                        url:'/orderManagement/delete?orderNoStr='+orderNoStr,
+                        type:'get',
+                        success:function (){
+                            layer.msg("删除成功");
+                            layer.close(index);
+                            reloadTable();
+                        },
+                        error:function (){
+                            layer.msg("删除失败")
+                        }
+                    })
+                });
             }
         });
 
@@ -154,9 +171,10 @@
 
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
+            var orderNo=data.orderNo;
             if (obj.event === 'edit') {
 
-                var content = miniPage.getHrefContent('/orderManagement/addEdit?orderNo='+data.orderNo);
+                var content = miniPage.getHrefContent('/orderManagement/addEdit?orderNo='+orderNo);
                 var openWH = miniPage.getOpenWidthHeight();
 
                 var index = layer.open({
@@ -185,9 +203,19 @@
                 });
                 return false;
             } else if (obj.event === 'delete') {
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
+                layer.confirm('是否删除该订单', function (index) {
+                    $.ajax({
+                        url:'/orderManagement/delete?orderNoStr='+orderNo,
+                        type:'get',
+                        success:function (){
+                            layer.msg("删除成功");
+                            obj.del();
+                            layer.close(index);
+                        },
+                        error:function (){
+                            layer.msg("删除失败")
+                        }
+                    })
                 });
             }
         });

@@ -8,10 +8,13 @@ import com.recycle.mapper.OrderMapper;
 import com.recycle.model.TbOrder;
 import com.recycle.model.vo.OrderVo;
 import com.recycle.server.OrderService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author: zhouzhu
@@ -49,6 +52,15 @@ public class OrderServiceImpl implements OrderService {
         page.setCurrent(orderVo.getPage());
         page.setSize(orderVo.getLimit());
         QueryWrapper queryWrapper=new QueryWrapper();
+        if (StringUtils.isNotEmpty(orderVo.getOrderNo())){
+            queryWrapper.eq("order_no",orderVo.getOrderNo());
+        }
+        if (StringUtils.isNotEmpty(orderVo.getUserName())){
+            queryWrapper.like("user_name",orderVo.getUserName());
+        }
+        if (StringUtils.isNotEmpty(orderVo.getReceiptDate())){
+            queryWrapper.eq("receipt_date",orderVo.getReceiptDate());
+        }
         IPage<TbOrder> orderPage = orderMapper.selectPage(page, queryWrapper);
         return orderPage;
     }
@@ -58,5 +70,13 @@ public class OrderServiceImpl implements OrderService {
         QueryWrapper wrapper=new QueryWrapper();
         wrapper.eq("order_no",orderNo);
         return orderMapper.selectOne(wrapper);
+    }
+
+    @Override
+    public void deleteOrder(String orderNoStr) {
+        List<String> orderNoStrList = Arrays.asList(orderNoStr.split(","));
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.in("order_no",orderNoStrList);
+        orderMapper.delete(wrapper);
     }
 }

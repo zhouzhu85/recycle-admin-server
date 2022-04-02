@@ -122,4 +122,14 @@ public class OrderManagementController {
         IPage<TbOrder> orderIPage=orderService.findOrderList(orderVo);
         return RecycleResult.ok(orderIPage.getRecords(),orderIPage.getTotal());
     }
+    @GetMapping("delete")
+    @ResponseBody
+    public RecycleResult deleteOrder(String orderNoStr){
+        if (StringUtils.isEmpty(orderNoStr)){
+            return RecycleResult.error("订单号为空");
+        }
+        orderService.deleteOrder(orderNoStr);
+        orderItemService.deleteOrderItem(orderNoStr);
+        return RecycleResult.ok("删除成功");
+    }
 }

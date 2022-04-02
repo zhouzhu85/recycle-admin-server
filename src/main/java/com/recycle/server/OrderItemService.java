@@ -22,4 +22,10 @@ public interface OrderItemService {
      * @return
      */
     List<TbOrderItem> findListByOrderNo(String orderNo);
+
+    /**
+     * 批量删除子订单
+     * @param orderNoStr
+     */
+    void deleteOrderItem(String orderNoStr);
 }
