@@ -26,6 +26,11 @@ datacenterId: 2
 workerId: 1
 
 #开启sql日志
+#第一种方式
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#第二种方式
+#logging:
+#  level:
+#    com.recycle.mapper: debug
