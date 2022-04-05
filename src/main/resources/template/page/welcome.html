@@ -81,6 +81,73 @@
             </div>
         </div>
 
+        <fieldset class="table-search-fieldset">
+            <legend>数据图表选择</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-col-xs12 layui-col-md12">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">废品分类</label>
+                                <div class="layui-input-inline">
+                                    <select name="modules" lay-verify="required" lay-search="">
+                                        <option value="">直接选择或搜索选择</option>
+                                        <option value="1">layer</option>
+                                        <option value="2">form</option>
+                                        <option value="3">layim</option>
+                                        <option value="4">element</option>
+                                        <option value="5">laytpl</option>
+                                        <option value="6">upload</option>
+                                        <option value="7">laydate</option>
+                                        <option value="8">laypage</option>
+                                        <option value="9">flow</option>
+                                        <option value="10">util</option>
+                                        <option value="11">code</option>
+                                        <option value="12">tree</option>
+                                        <option value="13">layedit</option>
+                                        <option value="14">nav</option>
+                                        <option value="15">tab</option>
+                                        <option value="16">table</option>
+                                        <option value="17">select</option>
+                                        <option value="18">checkbox</option>
+                                        <option value="19">switch</option>
+                                        <option value="20">radio</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">回收客</label>
+                                <div class="layui-input-inline">
+                                    <select name="modules" lay-verify="required" lay-search="">
+                                        <option value="">直接选择或搜索选择</option>
+                                        <option value="1">layer</option>
+                                        <option value="2">form</option>
+                                        <option value="3">layim</option>
+                                        <option value="4">element</option>
+                                        <option value="5">laytpl</option>
+                                        <option value="6">upload</option>
+                                        <option value="7">laydate</option>
+                                        <option value="8">laypage</option>
+                                        <option value="9">flow</option>
+                                        <option value="10">util</option>
+                                        <option value="11">code</option>
+                                        <option value="12">tree</option>
+                                        <option value="13">layedit</option>
+                                        <option value="14">nav</option>
+                                        <option value="15">tab</option>
+                                        <option value="16">table</option>
+                                        <option value="17">select</option>
+                                        <option value="18">checkbox</option>
+                                        <option value="19">switch</option>
+                                        <option value="20">radio</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
         <div class="layui-row layui-col-space15">
             <div class="layui-col-xs12 layui-col-md12">
                 <div id="echarts-records" style="background-color:#ffffff;min-height:400px;padding: 10px"></div>
@@ -104,105 +171,117 @@
     layui.use(['layer','echarts'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
+            form = layui.form,
             echarts = layui.echarts;
+        /**
+         * 初始化表单，要加上，不然刷新部分组件可能会不加载
+         */
+        form.render();
 
         /**
          * 报表功能
          */
-        var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
+        $.ajax({
+            url:'/chart_data',
+            type:'get',
+            success:function (result){
+                console.log(result);
+                var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
 
-        var optionRecords = {
-            title: {
-                text: '指标名称-报表图'
-            },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross',
-                    label: {
-                        backgroundColor: '#6a7985'
-                    }
-                }
-            },
-            legend: {
-                data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
-            },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: [
-                {
-                    type: 'category',
-                    boundaryGap: false,
-                    data: ['1日', '2日', '3日', '4日', '5日', '6日', '7日',
-                        '8日', '9日', '10日', '11日','12日', '13日', '14日', '15日',
-                        '16日', '17日', '18日', '19日', '20日', '21日', '22日',
-                        '23日', '24日', '25日', '26日', '27日', '28日', '29日','30日',
-                    ]
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value'
-                }
-            ],
-            series: [
-                {
-                    name: '邮件营销',
-                    type: 'line',
-                    stack: '总量',
-                    areaStyle: {},
-                    data: [120, 132, 101, 134, 90, 230, 210,
-                        120, 132, 101, 134, 90, 230, 210,
-                        120, 132, 101, 134, 90, 230, 210,
-                        120, 132, 101, 134, 90, 230, 210,
-                        120, 132, 101, 134
-                    ]
-                },
-                {
-                    name: '联盟广告',
-                    type: 'line',
-                    areaStyle: {},
-                    data: [220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name: '视频广告',
-                    type: 'line',
-                    stack: '总量',
-                    areaStyle: {},
-                    data: [150, 232, 201, 154, 190, 330, 410]
-                },
-                {
-                    name: '直接访问',
-                    type: 'line',
-                    stack: '总量',
-                    areaStyle: {},
-                    data: [320, 332, 301, 334, 390, 330, 320]
-                },
-                {
-                    name: '搜索引擎',
-                    type: 'line',
-                    stack: '总量',
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'top'
+                var optionRecords = {
+                    title: {
+                        text: '指标名称-报表图'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            label: {
+                                backgroundColor: '#6a7985'
+                            }
                         }
                     },
-                    areaStyle: {},
-                    data: [820, 932, 901, 934, 1290, 1330, 1320]
-                }
-            ]
-        };
-        echartsRecords.setOption(optionRecords);
+                    legend: {
+                        data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+                    },
+                    toolbox: {
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: result.data
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '邮件营销',
+                            type: 'line',
+                            stack: '总量',
+                            areaStyle: {},
+                            data: [120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101
+                            ]
+                        },
+                        {
+                            name: '联盟广告',
+                            type: 'line',
+                            areaStyle: {},
+                            data: [220, 182, 191, 234, 290, 330, 310]
+                        },
+                        {
+                            name: '视频广告',
+                            type: 'line',
+                            stack: '总量',
+                            areaStyle: {},
+                            data: [150, 232, 201, 154, 190, 330, 410]
+                        },
+                        {
+                            name: '直接访问',
+                            type: 'line',
+                            stack: '总量',
+                            areaStyle: {},
+                            data: [320, 332, 301, 334, 390, 330, 320]
+                        },
+                        {
+                            name: '搜索引擎',
+                            type: 'line',
+                            stack: '总量',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'top'
+                                }
+                            },
+                            areaStyle: {},
+                            data: [820, 932, 901, 934, 1290, 1330, 1320]
+                        }
+                    ]
+                };
+                echartsRecords.setOption(optionRecords);
+            },
+            error:function (){
+
+            }
+        })
+
 
 
         /**
