@@ -90,7 +90,7 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">废品分类</label>
                                 <div class="layui-input-inline">
-                                    <select name="modules" lay-verify="required" lay-search="">
+                                    <select name="modules" lay-verify="required" lay-search="" lay-multiple="">
                                         <option value="">直接选择或搜索选择</option>
                                         <option value="1">layer</option>
                                         <option value="2">form</option>
@@ -143,6 +143,7 @@
                                     </select>
                                 </div>
                             </div>
+                            <div id="demo1"></div>
                         </div>
                     </div>
                 </form>
@@ -168,11 +169,22 @@
     </div>
 </div>
 <script>
-    layui.use(['layer','echarts'], function () {
+    layui.use(['layer','echarts','xmSelect'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             form = layui.form,
+            xmSelect=layui.xmSelect,
             echarts = layui.echarts;
+
+        xmSelect.render({
+            el: '#demo1',
+            data: [
+                {name: '水果', value: 1, selected: true, disabled: true},
+                {name: '蔬菜', value: 2, selected: true},
+                {name: '桌子', value: 3, disabled: true},
+                {name: '北京', value: 4},
+            ],
+        })
         /**
          * 初始化表单，要加上，不然刷新部分组件可能会不加载
          */
@@ -202,7 +214,7 @@
                         }
                     },
                     legend: {
-                        data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+                        data: []
                     },
                     toolbox: {
                         feature: {
