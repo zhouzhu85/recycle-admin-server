@@ -86,64 +86,11 @@
             <div style="margin: 10px 10px 10px 10px">
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
-                        <div class="layui-col-xs12 layui-col-md12">
-                            <div class="layui-inline">
-                                <label class="layui-form-label">废品分类</label>
-                                <div class="layui-input-inline">
-                                    <select name="modules" lay-verify="required" lay-search="" lay-multiple="">
-                                        <option value="">直接选择或搜索选择</option>
-                                        <option value="1">layer</option>
-                                        <option value="2">form</option>
-                                        <option value="3">layim</option>
-                                        <option value="4">element</option>
-                                        <option value="5">laytpl</option>
-                                        <option value="6">upload</option>
-                                        <option value="7">laydate</option>
-                                        <option value="8">laypage</option>
-                                        <option value="9">flow</option>
-                                        <option value="10">util</option>
-                                        <option value="11">code</option>
-                                        <option value="12">tree</option>
-                                        <option value="13">layedit</option>
-                                        <option value="14">nav</option>
-                                        <option value="15">tab</option>
-                                        <option value="16">table</option>
-                                        <option value="17">select</option>
-                                        <option value="18">checkbox</option>
-                                        <option value="19">switch</option>
-                                        <option value="20">radio</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">回收客</label>
-                                <div class="layui-input-inline">
-                                    <select name="modules" lay-verify="required" lay-search="">
-                                        <option value="">直接选择或搜索选择</option>
-                                        <option value="1">layer</option>
-                                        <option value="2">form</option>
-                                        <option value="3">layim</option>
-                                        <option value="4">element</option>
-                                        <option value="5">laytpl</option>
-                                        <option value="6">upload</option>
-                                        <option value="7">laydate</option>
-                                        <option value="8">laypage</option>
-                                        <option value="9">flow</option>
-                                        <option value="10">util</option>
-                                        <option value="11">code</option>
-                                        <option value="12">tree</option>
-                                        <option value="13">layedit</option>
-                                        <option value="14">nav</option>
-                                        <option value="15">tab</option>
-                                        <option value="16">table</option>
-                                        <option value="17">select</option>
-                                        <option value="18">checkbox</option>
-                                        <option value="19">switch</option>
-                                        <option value="20">radio</option>
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="layui-col-xs12 layui-col-md6">
                             <div id="demo1"></div>
+                        </div>
+                        <div class="layui-col-xs12 layui-col-md6">
+                            <div id="demo2"></div>
                         </div>
                     </div>
                 </form>
@@ -176,15 +123,42 @@
             xmSelect=layui.xmSelect,
             echarts = layui.echarts;
 
-        xmSelect.render({
-            el: '#demo1',
-            data: [
-                {name: '水果', value: 1, selected: true, disabled: true},
-                {name: '蔬菜', value: 2, selected: true},
-                {name: '桌子', value: 3, disabled: true},
-                {name: '北京', value: 4},
-            ],
+        $.ajax({
+            url:'/category_user_data',
+            type: 'get',
+            success:function (resultData){
+                xmSelect.render({
+                    el: '#demo1',
+                    filterable: true,
+                    paging: true,
+                    pageSize: 5,
+                    pageEmptyShow: true,
+                    max: 5,
+                    toolbar: {show:true},
+                    tips: '选择五个废品分类',
+                    maxMethod(){
+                        layer.msg("最多展示五条数据报表");
+                    },
+                    data: resultData.data.categoryData,
+                })
+                xmSelect.render({
+                    el: '#demo2',
+                    filterable: true,
+                    paging: true,
+                    pageSize: 5,
+                    pageEmptyShow: true,
+                    radio: true,
+                    clickClose: true,
+                    tips: '选择回收客',
+                    data: resultData.data.usersData,
+                })
+            },
+            error:function (){
+
+            }
         })
+
+
         /**
          * 初始化表单，要加上，不然刷新部分组件可能会不加载
          */
