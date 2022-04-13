@@ -123,42 +123,6 @@
             xmSelect=layui.xmSelect,
             echarts = layui.echarts;
 
-        $.ajax({
-            url:'/category_user_data',
-            type: 'get',
-            success:function (resultData){
-                xmSelect.render({
-                    el: '#demo1',
-                    filterable: true,
-                    paging: true,
-                    pageSize: 5,
-                    pageEmptyShow: true,
-                    max: 5,
-                    toolbar: {show:true},
-                    tips: '选择五个废品分类',
-                    maxMethod(){
-                        layer.msg("最多展示五条数据报表");
-                    },
-                    data: resultData.data.categoryData,
-                })
-                xmSelect.render({
-                    el: '#demo2',
-                    filterable: true,
-                    paging: true,
-                    pageSize: 5,
-                    pageEmptyShow: true,
-                    radio: true,
-                    clickClose: true,
-                    tips: '选择回收客',
-                    data: resultData.data.usersData,
-                })
-            },
-            error:function (){
-
-            }
-        })
-
-
         /**
          * 初始化表单，要加上，不然刷新部分组件可能会不加载
          */
@@ -167,108 +131,163 @@
         /**
          * 报表功能
          */
-        $.ajax({
-            url:'/chart_data',
-            type:'get',
-            success:function (result){
-                console.log(result);
-                var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
+        var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
 
-                var optionRecords = {
-                    title: {
-                        text: '指标名称-报表图'
+        var optionRecords = {
+            title: {
+                text: '废品分类-报表图'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data: []
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: []
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: []
+        };
+
+        var demo1=xmSelect.render({
+            el: '#demo1',
+            filterable: true,
+            paging: true,
+            pageSize: 5,
+            pageEmptyShow: true,
+            max: 5,
+            toolbar: {show:true},
+            tips: '选择五个废品分类',
+            maxMethod(){
+                layer.msg("最多展示五条数据报表");
+            },
+            data: [],
+            on: function (data){
+                optionRecords.series=[
+                    {
+                        name: '邮件营销',
+                        type: 'line',
+                        stack: '总量',
+                        areaStyle: {},
+                        data: [120, 132, 101, 134, 90, 230, 210,
+                            120, 132, 101, 134, 90, 230, 210,
+                            120, 132, 101, 134, 90, 230, 210,
+                            120, 132, 101, 134, 90, 230, 210,
+                            120, 132, 101
+                        ]
                     },
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'cross',
-                            label: {
-                                backgroundColor: '#6a7985'
+                    {
+                        name: '联盟广告',
+                        type: 'line',
+                        areaStyle: {},
+                        data: [220, 182, 191, 234, 290, 330, 310]
+                    },
+                    {
+                        name: '视频广告',
+                        type: 'line',
+                        stack: '总量',
+                        areaStyle: {},
+                        data: [150, 232, 201, 154, 190, 330, 410]
+                    },
+                    {
+                        name: '直接访问',
+                        type: 'line',
+                        stack: '总量',
+                        areaStyle: {},
+                        data: [320, 332, 301, 334, 390, 330, 320]
+                    },
+                    {
+                        name: '搜索引擎',
+                        type: 'line',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'top'
                             }
-                        }
-                    },
-                    legend: {
-                        data: []
-                    },
-                    toolbox: {
-                        feature: {
-                            saveAsImage: {}
-                        }
-                    },
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
-                    xAxis: [
-                        {
-                            type: 'category',
-                            boundaryGap: false,
-                            data: result.data
-                        }
-                    ],
-                    yAxis: [
-                        {
-                            type: 'value'
-                        }
-                    ],
-                    series: [
-                        {
-                            name: '邮件营销',
-                            type: 'line',
-                            stack: '总量',
-                            areaStyle: {},
-                            data: [120, 132, 101, 134, 90, 230, 210,
-                                120, 132, 101, 134, 90, 230, 210,
-                                120, 132, 101, 134, 90, 230, 210,
-                                120, 132, 101, 134, 90, 230, 210,
-                                120, 132, 101
-                            ]
                         },
-                        {
-                            name: '联盟广告',
-                            type: 'line',
-                            areaStyle: {},
-                            data: [220, 182, 191, 234, 290, 330, 310]
-                        },
-                        {
-                            name: '视频广告',
-                            type: 'line',
-                            stack: '总量',
-                            areaStyle: {},
-                            data: [150, 232, 201, 154, 190, 330, 410]
-                        },
-                        {
-                            name: '直接访问',
-                            type: 'line',
-                            stack: '总量',
-                            areaStyle: {},
-                            data: [320, 332, 301, 334, 390, 330, 320]
-                        },
-                        {
-                            name: '搜索引擎',
-                            type: 'line',
-                            stack: '总量',
-                            label: {
-                                normal: {
-                                    show: true,
-                                    position: 'top'
-                                }
-                            },
-                            areaStyle: {},
-                            data: [820, 932, 901, 934, 1290, 1330, 1320]
-                        }
-                    ]
-                };
+                        areaStyle: {},
+                        data: [820, 932, 901, 934, 1290, 1330, 1320]
+                    }
+                ]
                 echartsRecords.setOption(optionRecords);
+            }
+        })
+        var demo2=xmSelect.render({
+            el: '#demo2',
+            filterable: true,
+            paging: true,
+            pageSize: 5,
+            pageEmptyShow: true,
+            radio: true,
+            clickClose: true,
+            tips: '选择回收客',
+            data: [],
+            on: function (data){
+                console.log(data)
+                var arr = data.arr;
+                if (arr.length>0){
+                    optionRecords.title.text=arr[0].name+"-"+"废品分类-报表图"
+                }else {
+                    optionRecords.title.text="废品分类-报表图";
+                }
+                echartsRecords.setOption(optionRecords);
+            }
+        })
+        $.ajax({
+            url:'/category_user_data',
+            type: 'get',
+            success:function (resultData){
+                demo1.update({
+                    data: resultData.data.categoryData
+                })
+                demo2.update({
+                    data: resultData.data.usersData
+                })
             },
             error:function (){
 
             }
         })
 
+        $.ajax({
+            url:'/chart_data',
+            type:'get',
+            success:function (result){
+                console.log(result);
+                optionRecords.xAxis[0].data=result.data
+                echartsRecords.setOption(optionRecords);
+            },
+            error:function (){
 
+            }
+        })
 
         /**
          * 玫瑰图表
