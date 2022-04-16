@@ -3,6 +3,7 @@ package com.recycle.controller;
 import com.recycle.model.RecycleResult;
 import com.recycle.model.TbCategory;
 import com.recycle.model.TbUsers;
+import com.recycle.model.vo.CategoryUserReportVo;
 import com.recycle.server.CategoryService;
 import com.recycle.server.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class IndexController {
      * 报表图时间
      * @return
      */
-    @GetMapping("chart_data")
+    @GetMapping("chartDate_data")
     @ResponseBody
     public RecycleResult getChartData(){
         List<String> thirtyDayList=new ArrayList<>();
@@ -91,4 +92,18 @@ public class IndexController {
         return RecycleResult.ok("查询成功",resultMap);
     }
 
+    @GetMapping("getCategoryUserReport")
+    @ResponseBody
+    public RecycleResult getCategoryUserReport(String categoryId,String userId){
+        List<TbCategory> tbCategoryList=categoryService.findCategoryListById(categoryId);
+        List<CategoryUserReportVo> categoryUserReportVoList=new ArrayList<>();
+        for (TbCategory tbCategory : tbCategoryList) {
+            CategoryUserReportVo categoryUserReportVo=new CategoryUserReportVo();
+            categoryUserReportVo.setName(tbCategory.getCategoryName());
+            List<Integer> categoryUserReportList=categoryService.findCategoryUserReport(tbCategory.getId(),userId);
+            categoryUserReportVo.setData(categoryUserReportList);
+            categoryUserReportVoList.add(categoryUserReportVo);
+        }
+        return RecycleResult.ok("查询成功",categoryUserReportVoList);
+    }
 }

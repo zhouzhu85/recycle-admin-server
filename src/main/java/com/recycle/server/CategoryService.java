@@ -49,4 +49,19 @@ public interface CategoryService {
      * @return
      */
     List<TbCategory> findAll();
+
+    /**
+     * 根据id字符串查询分类
+     * @param categoryId
+     * @return
+     */
+    List<TbCategory> findCategoryListById(String categoryId);
+
+    /**
+     * 根据分类id和回收客id查询一个月内的重量图表
+     * @param categoryId
+     * @param userId
+     * @return
+     */
+    List<Integer> findCategoryUserReport(String categoryId, String userId);
 }

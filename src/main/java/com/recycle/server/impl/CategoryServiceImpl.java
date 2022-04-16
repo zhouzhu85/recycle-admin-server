@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -75,5 +76,20 @@ public class CategoryServiceImpl implements CategoryService {
     public List<TbCategory> findAll() {
         QueryWrapper wrapper=new QueryWrapper();
         return categoryMapper.selectList(wrapper);
+    }
+
+    @Override
+    public List<TbCategory> findCategoryListById(String categoryId) {
+        String[] categoryIdArray =  categoryId.split(",");
+        final List<TbCategory> tbCategoryList = categoryMapper.selectBatchIds(Arrays.asList(categoryIdArray));
+        return tbCategoryList;
+    }
+
+    @Override
+    public List<Integer> findCategoryUserReport(String categoryId, String userId) {
+        QueryWrapper queryWrapper=new QueryWrapper();
+        queryWrapper.groupBy("");
+        categoryMapper.selectObjs(queryWrapper);
+        return null;
     }
 }

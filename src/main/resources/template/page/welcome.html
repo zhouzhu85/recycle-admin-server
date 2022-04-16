@@ -189,6 +189,27 @@
             },
             data: [],
             on: function (data){
+                console.log(data);
+                var arrArray=data.arr;
+                var categoryIdStr="";
+                for (var i=0;i<arrArray.length;i++){
+                    if (categoryIdStr!=""){
+                        categoryIdStr=categoryIdStr+","+arrArray[i].value;
+                    }else {
+                        categoryIdStr=arrArray[i].value;
+                    }
+                }
+                $.ajax({
+                    url:'/getCategoryUserReport',
+                    type:'get',
+                    data:{"categoryId":categoryIdStr},
+                    success:function (){
+
+                    },
+                    error:function (){
+
+                    }
+                })
                 optionRecords.series=[
                     {
                         name: '邮件营销',
@@ -205,6 +226,7 @@
                     {
                         name: '联盟广告',
                         type: 'line',
+                        stack: '总量',
                         areaStyle: {},
                         data: [220, 182, 191, 234, 290, 330, 310]
                     },
@@ -277,7 +299,7 @@
         })
 
         $.ajax({
-            url:'/chart_data',
+            url:'/chartDate_data',
             type:'get',
             success:function (result){
                 console.log(result);
