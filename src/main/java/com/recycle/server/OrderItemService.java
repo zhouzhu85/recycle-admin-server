@@ -28,4 +28,12 @@ public interface OrderItemService {
      * @param orderNoStr
      */
     void deleteOrderItem(String orderNoStr);
+
+    /**
+     * 根据分类id和用户id查询一个月内的各个分类重量报表
+     * @param categoryId
+     * @param userId
+     * @return
+     */
+    List<Integer> findCategoryWeightReport(String categoryId, String userId);
 }

@@ -5,6 +5,8 @@ import com.recycle.model.TbCategory;
 import com.recycle.model.TbUsers;
 import com.recycle.model.vo.CategoryUserReportVo;
 import com.recycle.server.CategoryService;
+import com.recycle.server.OrderItemService;
+import com.recycle.server.OrderService;
 import com.recycle.server.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,12 @@ public class IndexController {
 
     @Autowired
     private UsersService usersService;
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private OrderItemService orderItemService;
 
     @GetMapping("/")
     public ModelAndView index(ModelAndView modelAndView){
@@ -100,7 +108,7 @@ public class IndexController {
         for (TbCategory tbCategory : tbCategoryList) {
             CategoryUserReportVo categoryUserReportVo=new CategoryUserReportVo();
             categoryUserReportVo.setName(tbCategory.getCategoryName());
-            List<Integer> categoryUserReportList=categoryService.findCategoryUserReport(tbCategory.getId(),userId);
+            List<Integer> categoryUserReportList=orderItemService.findCategoryWeightReport(tbCategory.getId(),userId);
             categoryUserReportVo.setData(categoryUserReportList);
             categoryUserReportVoList.add(categoryUserReportVo);
         }

@@ -59,4 +59,9 @@ public class OrderItemServiceImpl implements OrderItemService {
         wrapper.in("order_no",orderNoStrList);
         orderItemMapper.delete(wrapper);
     }
+
+    @Override
+    public List<Integer> findCategoryWeightReport(String categoryId, String userId) {
+        return orderItemMapper.findCategoryWeightReport(categoryId,userId);
+    }
 }

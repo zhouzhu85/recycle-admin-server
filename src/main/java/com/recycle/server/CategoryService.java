@@ -57,11 +57,4 @@ public interface CategoryService {
      */
     List<TbCategory> findCategoryListById(String categoryId);
 
-    /**
-     * 根据分类id和回收客id查询一个月内的重量图表
-     * @param categoryId
-     * @param userId
-     * @return
-     */
-    List<Integer> findCategoryUserReport(String categoryId, String userId);
 }

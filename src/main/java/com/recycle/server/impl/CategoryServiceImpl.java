@@ -84,12 +84,4 @@ public class CategoryServiceImpl implements CategoryService {
         final List<TbCategory> tbCategoryList = categoryMapper.selectBatchIds(Arrays.asList(categoryIdArray));
         return tbCategoryList;
     }
-
-    @Override
-    public List<Integer> findCategoryUserReport(String categoryId, String userId) {
-        QueryWrapper queryWrapper=new QueryWrapper();
-        queryWrapper.groupBy("");
-        categoryMapper.selectObjs(queryWrapper);
-        return null;
-    }
 }
