@@ -60,7 +60,9 @@ public class OrderManagementController {
         }
         if (orderNo!=null){
             TbOrder order=orderService.findOneOrder(orderNo);
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
             List<TbOrderItem> orderItemList=orderItemService.findListByOrderNo(orderNo);
+            modelAndView.addObject("orderReceiptDate",simpleDateFormat.format(order.getReceiptDate()));
             modelAndView.addObject("order",order);
             modelAndView.addObject("orderItemList",orderItemList);
         }
