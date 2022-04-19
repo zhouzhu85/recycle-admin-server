@@ -4,6 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.recycle.mapper.OrderItemMapper">
     <select id="findCategoryWeightReport" resultType="java.lang.Integer">
-
+        SELECT
+        IFNULL( cattyNumber, 0 )
+        FROM
+        (
+        SELECT
+        SUM( catty_number ) cattyNumber,
+        DATE_FORMAT( create_date, '%Y-%m-%d' ) dayTime
+        FROM
+        tb_order_item
+        WHERE
+        category_id = #{categoryId}
+        <if test="userId!=null">
+            AND user_id =#{userId}
+        </if>
+        AND DATE_SUB( CURDATE(), INTERVAL 30 DAY ) &lt;= DATE( create_date )
+        GROUP BY
+        DATE_FORMAT( create_date, '%Y-%m-%d' )
+        ) t0
+        RIGHT JOIN ( SELECT ( CURDATE() - INTERVAL help_topic_id DAY ) dayTime FROM mysql.help_topic WHERE help_topic_id &lt; 30 ) t1 ON t1.dayTime = t0.dayTime ORDER BY t1.dayTime ASC
     </select>
 </mapper>
