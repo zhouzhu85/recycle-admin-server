@@ -52,7 +52,7 @@ public class IndexController {
     @ResponseBody
     public RecycleResult getChartData(){
         List<String> thirtyDayList=new ArrayList<>();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         //最近一个月
@@ -61,7 +61,7 @@ public class IndexController {
         c.add(Calendar.DAY_OF_MONTH,1);
         int count = c.getActualMaximum(Calendar.DAY_OF_MONTH);
         for (int i = 0; i < count; i++) {
-            thirtyDayList.add(simpleDateFormat.format(c.getTime())+"日");
+            thirtyDayList.add(simpleDateFormat.format(c.getTime()));
             c.add(Calendar.DAY_OF_MONTH,1);
         }
         thirtyDayList.remove(0);
@@ -77,6 +77,7 @@ public class IndexController {
         Map resultMap=new HashMap<>();
         List<TbCategory> categoryList = categoryService.findAll();
         List<Map> newCategoryList = new ArrayList<>();
+        List<CategoryUserReportVo> categoryUserReportVoList=new ArrayList<>();
         for (int i = 0; i < categoryList.size(); i++) {
             TbCategory tbCategory = categoryList.get(i);
             Map<String,Object> categoryMap=new HashMap<>();
@@ -84,6 +85,11 @@ public class IndexController {
             categoryMap.put("value",tbCategory.getId());
             if (i<=4){
                 categoryMap.put("selected",true);
+                CategoryUserReportVo categoryUserReportVo=new CategoryUserReportVo();
+                categoryUserReportVo.setName(tbCategory.getCategoryName());
+                List<Integer> categoryUserReportList=orderItemService.findCategoryWeightReport(tbCategory.getId(), null);
+                categoryUserReportVo.setData(categoryUserReportList);
+                categoryUserReportVoList.add(categoryUserReportVo);
             }
             newCategoryList.add(categoryMap);
         }
@@ -97,6 +103,7 @@ public class IndexController {
             newUsersList.add(userMap);
         }
         resultMap.put("usersData",newUsersList);
+        resultMap.put("categoryReportData",categoryUserReportVoList);
         return RecycleResult.ok("查询成功",resultMap);
     }
 

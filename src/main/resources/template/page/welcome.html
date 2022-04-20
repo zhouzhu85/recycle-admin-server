@@ -164,7 +164,10 @@
                 {
                     type: 'category',
                     boundaryGap: false,
-                    data: []
+                    data: [],
+                    axisLabel: {
+                        rotate: 50
+                    }
                 }
             ],
             yAxis: [
@@ -234,6 +237,7 @@
                 echartsRecords.setOption(optionRecords);
             }
         })
+        //加载分类数据、回收客数据和分类报表数据
         $.ajax({
             url:'/category_user_data',
             type: 'get',
@@ -244,12 +248,14 @@
                 demo2.update({
                     data: resultData.data.usersData
                 })
+                optionRecords.series=resultData.data.categoryReportData;
+                echartsRecords.setOption(optionRecords);
             },
             error:function (){
 
             }
         })
-
+        //加载报表图日期
         $.ajax({
             url:'/chartDate_data',
             type:'get',
