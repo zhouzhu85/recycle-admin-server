@@ -62,6 +62,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public List<Integer> findCategoryWeightReport(String categoryId, String userId) {
+        userId="".equals(userId)?null:userId;
         return orderItemMapper.findCategoryWeightReport(categoryId,userId);
     }
 }

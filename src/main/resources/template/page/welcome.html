@@ -87,10 +87,10 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-col-xs12 layui-col-md6">
-                            <div id="demo1"></div>
+                            <div id="categorySelectId"></div>
                         </div>
                         <div class="layui-col-xs12 layui-col-md6">
-                            <div id="demo2"></div>
+                            <div id="userSelectId"></div>
                         </div>
                     </div>
                 </form>
@@ -178,8 +178,8 @@
             series: []
         };
         echartsRecords.setOption(optionRecords);
-        var demo1=xmSelect.render({
-            el: '#demo1',
+        var categorySelect=xmSelect.render({
+            el: '#categorySelectId',
             filterable: true,
             paging: true,
             pageSize: 5,
@@ -193,31 +193,12 @@
             data: [],
             on: function (data){
                 console.log(data);
-                var arrArray=data.arr;
-                var categoryIdStr="";
-                for (var i=0;i<arrArray.length;i++){
-                    if (categoryIdStr!=""){
-                        categoryIdStr=categoryIdStr+","+arrArray[i].value;
-                    }else {
-                        categoryIdStr=arrArray[i].value;
-                    }
-                }
-                $.ajax({
-                    url:'/getCategoryUserReport',
-                    type:'get',
-                    data:{"categoryId":categoryIdStr},
-                    success:function (resultData){
-                        optionRecords.series= resultData.data
-                        echartsRecords.setOption(optionRecords,true);
-                    },
-                    error:function (){
-
-                    }
-                })
+                var categoryArray=data.arr;
+                ajaxRecordsData(categoryArray,'');
             }
         })
-        var demo2=xmSelect.render({
-            el: '#demo2',
+        var userSelect=xmSelect.render({
+            el: '#userSelectId',
             filterable: true,
             paging: true,
             pageSize: 5,
@@ -227,25 +208,51 @@
             tips: '选择回收客',
             data: [],
             on: function (data){
+                var categoryArray=categorySelect.getValue()
+                console.log()
                 console.log(data)
-                var arr = data.arr;
-                if (arr.length>0){
-                    optionRecords.title.text=arr[0].name+"-"+"废品分类-报表图"
+                var userArray = data.arr;
+                var userId='';
+                if (userArray.length>0){
+                    optionRecords.title.text=userArray[0].name+"-"+"废品分类-报表图"
+                    userId=userArray[0].value;
                 }else {
                     optionRecords.title.text="废品分类-报表图";
                 }
-                echartsRecords.setOption(optionRecords);
+                ajaxRecordsData(categoryArray,userId);
             }
         })
+        function ajaxRecordsData(categoryArray,userId){
+            var categoryIdStr="";
+            for (var i=0;i<categoryArray.length;i++){
+                if (categoryIdStr!=""){
+                    categoryIdStr=categoryIdStr+","+categoryArray[i].value;
+                }else {
+                    categoryIdStr=categoryArray[i].value;
+                }
+            }
+            $.ajax({
+                url:'/getCategoryUserReport',
+                type:'get',
+                data:{"categoryId":categoryIdStr,"userId":userId},
+                success:function (resultData){
+                    optionRecords.series= resultData.data
+                    echartsRecords.setOption(optionRecords,true);
+                },
+                error:function (){
+                    layer.msg("系统异常")
+                }
+            })
+        }
         //加载分类数据、回收客数据和分类报表数据
         $.ajax({
             url:'/category_user_data',
             type: 'get',
             success:function (resultData){
-                demo1.update({
+                categorySelect.update({
                     data: resultData.data.categoryData
                 })
-                demo2.update({
+                userSelect.update({
                     data: resultData.data.usersData
                 })
                 optionRecords.series=resultData.data.categoryReportData;
