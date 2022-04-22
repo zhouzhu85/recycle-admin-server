@@ -1,6 +1,7 @@
 package com.recycle.server;
 
 import com.recycle.model.TbOrderItem;
+import com.recycle.model.vo.CategoryUserYearReportVo;
 
 import java.util.List;
 
@@ -36,4 +37,12 @@ public interface OrderItemService {
      * @return
      */
     List<Integer> findCategoryWeightReport(String categoryId, String userId);
+
+    /**
+     * 根据分类id和用户id查询三年内的各个分类重量报表
+     * @param categoryId
+     * @param userId
+     * @return
+     */
+    List<CategoryUserYearReportVo> findCategoryWeightYearReport(String categoryId, String userId);
 }

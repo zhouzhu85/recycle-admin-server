@@ -31,4 +31,6 @@ public class CategoryUserReportVo {
      * 数据
      */
     private List<Integer> data;
+
+    private AreaStyle areaStyle;
 }

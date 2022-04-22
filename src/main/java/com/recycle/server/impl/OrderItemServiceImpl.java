@@ -4,6 +4,7 @@ import cn.hutool.core.lang.Snowflake;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.recycle.mapper.OrderItemMapper;
 import com.recycle.model.TbOrderItem;
+import com.recycle.model.vo.CategoryUserYearReportVo;
 import com.recycle.server.OrderItemService;
 import org.springframework.stereotype.Service;
 
@@ -64,5 +65,11 @@ public class OrderItemServiceImpl implements OrderItemService {
     public List<Integer> findCategoryWeightReport(String categoryId, String userId) {
         userId="".equals(userId)?null:userId;
         return orderItemMapper.findCategoryWeightReport(categoryId,userId);
+    }
+
+    @Override
+    public List<CategoryUserYearReportVo> findCategoryWeightYearReport(String categoryId, String userId) {
+        userId="".equals(userId)?null:userId;
+        return orderItemMapper.findCategoryWeightYearReport(categoryId,userId);
     }
 }

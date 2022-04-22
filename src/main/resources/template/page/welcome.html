@@ -10,7 +10,7 @@
             <div class="layui-col-xs12 layui-col-md3">
 
                 <div class="layui-card top-panel">
-                    <div class="layui-card-header">要展示的指标名称</div>
+                    <div class="layui-card-header">回收客人数</div>
                     <div class="layui-card-body">
                         <div class="layui-row layui-col-space5">
                             <div class="layui-col-xs9 layui-col-md9 top-panel-number">
@@ -28,7 +28,7 @@
             <div class="layui-col-xs12 layui-col-md3">
 
                 <div class="layui-card top-panel">
-                    <div class="layui-card-header">要展示的指标名称</div>
+                    <div class="layui-card-header">废品支出总金额</div>
                     <div class="layui-card-body">
                         <div class="layui-row layui-col-space5">
                             <div class="layui-col-xs9 layui-col-md9 top-panel-number">
@@ -46,7 +46,7 @@
             <div class="layui-col-xs12 layui-col-md3">
 
                 <div class="layui-card top-panel">
-                    <div class="layui-card-header">要展示的指标名称</div>
+                    <div class="layui-card-header">废品盈利总金额</div>
                     <div class="layui-card-body">
                         <div class="layui-row layui-col-space5">
                             <div class="layui-col-xs9 layui-col-md9 top-panel-number">
@@ -64,7 +64,7 @@
             <div class="layui-col-xs12 layui-col-md3">
 
                 <div class="layui-card top-panel">
-                    <div class="layui-card-header">要展示的指标名称</div>
+                    <div class="layui-card-header">废品回收总重量</div>
                     <div class="layui-card-body">
                         <div class="layui-row layui-col-space5">
                             <div class="layui-col-xs9 layui-col-md9 top-panel-number">
@@ -72,7 +72,7 @@
                             </div>
                             <div class="layui-col-xs3 layui-col-md3 top-panel-tips">
                                 比昨天 <a style="color: #1aa094">▲0.12</a><br>
-                                比七日 <a style="color: #bd3004">▼0.06</a>
+                                比上月 <a style="color: #bd3004">▼0.06</a>
                             </div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
         </div>
 
         <fieldset class="table-search-fieldset">
-            <legend>数据图表选择</legend>
+            <legend>分类选择</legend>
             <div style="margin: 10px 10px 10px 10px">
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
@@ -135,7 +135,7 @@
 
         var optionRecords = {
             title: {
-                text: '废品分类-报表图'
+                text: '废品回收-总量月报表图（斤）'
             },
             tooltip: {
                 trigger: 'axis',
@@ -178,6 +178,34 @@
             series: []
         };
         echartsRecords.setOption(optionRecords);
+
+
+        /**
+         * 柱状图
+         */
+        var echartsDataset = echarts.init(document.getElementById('echarts-dataset'), 'walden');
+
+        var optionDataset = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                dimensions: [],
+                source: [
+
+                ]
+            },
+            xAxis: {type: 'category'},
+            yAxis: {},
+            // Declare several bar series, each will be mapped
+            // to a column of dataset.source by default.
+            series: [
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'}
+            ]
+        };
+        echartsDataset.setOption(optionDataset);
+
         var categorySelect=xmSelect.render({
             el: '#categorySelectId',
             filterable: true,
@@ -214,10 +242,10 @@
                 var userArray = data.arr;
                 var userId='';
                 if (userArray.length>0){
-                    optionRecords.title.text=userArray[0].name+"-"+"废品分类-报表图"
+                    optionRecords.title.text=userArray[0].name+"-"+"废品回收-总量月报表图（斤）"
                     userId=userArray[0].value;
                 }else {
-                    optionRecords.title.text="废品分类-报表图";
+                    optionRecords.title.text="废品回收-总量月报表图（斤）";
                 }
                 ajaxRecordsData(categoryArray,userId);
             }
@@ -236,8 +264,23 @@
                 type:'get',
                 data:{"categoryId":categoryIdStr,"userId":userId},
                 success:function (resultData){
+                    console.log(resultData);
                     optionRecords.series= resultData.data
                     echartsRecords.setOption(optionRecords,true);
+                },
+                error:function (){
+                    layer.msg("系统异常")
+                }
+            })
+            $.ajax({
+                url:'/getCategoryUserYearReport',
+                type:'get',
+                data:{"categoryId":categoryIdStr,"userId":userId},
+                success:function (resultData){
+                    console.log(resultData);
+                    optionDataset.dataset.dimensions= resultData.data.dimensions
+                    optionDataset.dataset.source= resultData.data.source
+                    echartsDataset.setOption(optionDataset);
                 },
                 error:function (){
                     layer.msg("系统异常")
@@ -249,14 +292,20 @@
             url:'/category_user_data',
             type: 'get',
             success:function (resultData){
+                console.log(resultData)
                 categorySelect.update({
                     data: resultData.data.categoryData
                 })
                 userSelect.update({
                     data: resultData.data.usersData
                 })
+                //废品分类最近一个月的折线图
                 optionRecords.series=resultData.data.categoryReportData;
                 echartsRecords.setOption(optionRecords);
+                //分类三年数据柱状图
+                optionDataset.dataset.dimensions= resultData.data.categoryUserYearReportData.dimensions
+                optionDataset.dataset.source= resultData.data.categoryUserYearReportData.source
+                echartsDataset.setOption(optionDataset);
             },
             error:function (){
 
@@ -319,37 +368,6 @@
         //     ]
         // };
         // echartsPies.setOption(optionPies);
-
-
-        /**
-         * 柱状图
-         */
-        var echartsDataset = echarts.init(document.getElementById('echarts-dataset'), 'walden');
-
-        var optionDataset = {
-            legend: {},
-            tooltip: {},
-            dataset: {
-                dimensions: ['product', '2015', '2016', '2017'],
-                source: [
-                    {product: 'Matcha Latte', '2015': 43.3, '2016': 85.8, '2017': 93.7},
-                    {product: 'Milk Tea', '2015': 83.1, '2016': 73.4, '2017': 55.1},
-                    {product: 'Cheese Cocoa', '2015': 86.4, '2016': 65.2, '2017': 82.5},
-                    {product: 'Walnut Brownie', '2015': 72.4, '2016': 53.9, '2017': 39.1}
-                ]
-            },
-            xAxis: {type: 'category'},
-            yAxis: {},
-            // Declare several bar series, each will be mapped
-            // to a column of dataset.source by default.
-            series: [
-                {type: 'bar'},
-                {type: 'bar'},
-                {type: 'bar'}
-            ]
-        };
-
-        echartsDataset.setOption(optionDataset);
 
 
         /**
