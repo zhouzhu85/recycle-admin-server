@@ -4,12 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.recycle.mapper.UsersMapper">
     <insert id="insertUsers" parameterType="com.recycle.model.TbUsers">
-        insert into users (user_name,phone,sex) values (#{userName},#{phone},#{sex})
+        insert into tb_users (user_name,phone,sex) values (#{userName},#{phone},#{sex})
     </insert>
     <select id="findAllUsers" resultType="com.recycle.model.TbUsers">
-        select id,user_name,phone,sex from users
+        select id,user_name,phone,sex from tb_users
     </select>
     <select id="findAllUsersCount" resultType="java.lang.Integer">
-        select count(1) from users
+        select count(1) from tb_users
     </select>
 </mapper>

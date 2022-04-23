@@ -43,6 +43,7 @@ public class IndexController {
     }
     @GetMapping("/welcome")
     public ModelAndView welcome(ModelAndView modelAndView){
+        modelAndView.addObject("allUsersCount",usersService.findAllUsersCount());
         modelAndView.setViewName("/page/welcome.html");
         return modelAndView;
     }
@@ -135,7 +136,9 @@ public class IndexController {
             newUsersList.add(userMap);
         }
         resultMap.put("usersData",newUsersList);
+        //折线图数据
         resultMap.put("categoryReportData",categoryUserReportVoList);
+        //柱状图数据
         resultMap.put("categoryUserYearReportData",categoryUserYearReporMap);
         return RecycleResult.ok("查询成功",resultMap);
     }
