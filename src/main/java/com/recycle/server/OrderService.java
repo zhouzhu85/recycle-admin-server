@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.recycle.model.TbOrder;
 import com.recycle.model.vo.OrderVo;
 
+import java.math.BigDecimal;
+
 /**
  * @author: zhouzhu
  * @date: 2022/3/31 15:22
@@ -35,4 +37,10 @@ public interface OrderService {
      * @param orderNoStr
      */
     void deleteOrder(String orderNoStr);
+
+    /**
+     * 统计所有废品订单总金额
+     * @return
+     */
+    BigDecimal getOrderAllAmount();
 }

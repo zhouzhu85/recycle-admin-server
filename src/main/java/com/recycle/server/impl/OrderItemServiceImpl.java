@@ -9,6 +9,7 @@ import com.recycle.server.OrderItemService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -71,5 +72,16 @@ public class OrderItemServiceImpl implements OrderItemService {
     public List<CategoryUserYearReportVo> findCategoryWeightYearReport(String categoryId, String userId) {
         userId="".equals(userId)?null:userId;
         return orderItemMapper.findCategoryWeightYearReport(categoryId,userId);
+    }
+
+    @Override
+    public BigDecimal getAllCattyNumber() {
+        QueryWrapper<TbOrderItem> queryWrapper=new QueryWrapper<>();
+        queryWrapper.select("sum(catty_number) as catty_number");
+        TbOrderItem tbOrderItem = orderItemMapper.selectOne(queryWrapper);
+        Long cattyNumber = tbOrderItem.getCattyNumber();
+        //斤转成吨
+        BigDecimal divide = new BigDecimal(cattyNumber).divide(new BigDecimal(2000));
+        return divide;
     }
 }

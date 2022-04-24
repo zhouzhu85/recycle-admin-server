@@ -44,6 +44,8 @@ public class IndexController {
     @GetMapping("/welcome")
     public ModelAndView welcome(ModelAndView modelAndView){
         modelAndView.addObject("allUsersCount",usersService.findAllUsersCount());
+        modelAndView.addObject("orderAllAmount",orderService.getOrderAllAmount());
+        modelAndView.addObject("allCattyNumber",orderItemService.getAllCattyNumber());
         modelAndView.setViewName("/page/welcome.html");
         return modelAndView;
     }

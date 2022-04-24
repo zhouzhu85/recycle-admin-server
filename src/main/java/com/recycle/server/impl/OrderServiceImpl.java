@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -78,5 +79,13 @@ public class OrderServiceImpl implements OrderService {
         QueryWrapper wrapper=new QueryWrapper();
         wrapper.in("order_no",orderNoStrList);
         orderMapper.delete(wrapper);
+    }
+
+    @Override
+    public BigDecimal getOrderAllAmount() {
+        QueryWrapper<TbOrder> queryWrapper=new QueryWrapper<>();
+        queryWrapper.select("SUM(all_amount) as all_amount");
+        TbOrder order = orderMapper.selectOne(queryWrapper);
+        return order.getAllAmount();
     }
 }

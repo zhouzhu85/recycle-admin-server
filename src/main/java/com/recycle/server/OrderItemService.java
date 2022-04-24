@@ -3,6 +3,7 @@ package com.recycle.server;
 import com.recycle.model.TbOrderItem;
 import com.recycle.model.vo.CategoryUserYearReportVo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -45,4 +46,10 @@ public interface OrderItemService {
      * @return
      */
     List<CategoryUserYearReportVo> findCategoryWeightYearReport(String categoryId, String userId);
+
+    /**
+     * 获取所有废品的重量 单位吨
+     * @return
+     */
+    BigDecimal getAllCattyNumber();
 }
