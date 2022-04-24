@@ -37,9 +37,13 @@ public class TbOrderItem {
      */
     private Long cattyNumber;
     /**
-     * 金额
+     * 回收金额
      */
     private BigDecimal amount;
+    /**
+     * 出售金额
+     */
+    private BigDecimal saleAmount;
     /**
      * 创建时间
      */

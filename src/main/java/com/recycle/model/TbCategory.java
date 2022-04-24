@@ -18,17 +18,21 @@ import java.util.Date;
 public class TbCategory {
     private String id;
     /**
-     * 分类名称
+     * 废品名称
      */
     private String categoryName;
     /**
-     * 单位名称
+     * 废品单位名称
      */
     private String unitName;
     /**
-     * 单位值
+     * 回收单价
      */
     private BigDecimal unitValue;
+    /**
+     * 出售单价
+     */
+    private BigDecimal saleUnitValue;
     /**
      * 创建时间
      */
