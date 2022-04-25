@@ -45,16 +45,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public IPage<TbUsers> findCategoryByPage(CategoryVo categoryVo) {
+    public IPage<TbCategory> findCategoryByPage(CategoryVo categoryVo) {
         Page page=new Page();
         page.setCurrent(categoryVo.getPage());
         page.setSize(categoryVo.getLimit());
-        QueryWrapper queryWrapper=new QueryWrapper();
+        QueryWrapper<TbCategory> queryWrapper=new QueryWrapper();
         if (StringUtils.isNotEmpty(categoryVo.getCategoryName())) {
             queryWrapper.like("category_name", categoryVo.getCategoryName());
         }
-        IPage<TbUsers> usersIPage = categoryMapper.selectPage(page, queryWrapper);
-        return usersIPage;
+        IPage<TbCategory> categoryIPage = categoryMapper.selectPage(page, queryWrapper);
+        return categoryIPage;
     }
 
     @Override

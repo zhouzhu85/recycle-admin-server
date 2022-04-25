@@ -56,6 +56,7 @@ public class OrderManagementController {
             Map<String,Object> categoryMap=new HashMap();
             categoryMap.put("unitValue",category.getUnitValue()+"-"+category.getId());
             categoryMap.put("unitName",(category.getCategoryName()+"（"+category.getUnitValue()+"/"+category.getUnitName()+"）"));
+            categoryMap.put("saleUnitValue",category.getSaleUnitValue());
             newCategoryList.add(categoryMap);
         }
         if (orderNo!=null){

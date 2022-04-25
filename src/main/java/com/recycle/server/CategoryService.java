@@ -23,7 +23,7 @@ public interface CategoryService {
      * @param categoryVo
      * @return
      */
-    IPage<TbUsers> findCategoryByPage(CategoryVo categoryVo);
+    IPage<TbCategory> findCategoryByPage(CategoryVo categoryVo);
 
     /**
      * 根据id查询分类

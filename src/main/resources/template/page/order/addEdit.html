@@ -45,7 +45,7 @@
                     <div class="layui-col-md4 selectClass">
                         <select name="" lay-verify="required" lay-search="" lay-filter="categoryFilter">
                             <option value="">选择或搜索分类</option>
-                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}"></option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}" th:attr="data-saleUnitValue=${category.saleUnitValue}"></option>
                         </select>
                     </div>
                     <div class="layui-col-md4 cattyClass">
@@ -59,7 +59,7 @@
                     <div class="layui-col-md4 selectClass">
                         <select th:name="${'category_'+orderItem.categoryId}" lay-verify="required" lay-search="" lay-filter="categoryFilter">
                             <option value="">选择或搜索分类</option>
-                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}" th:selected="${#strings.contains(category.unitValue,orderItem.categoryId)}"></option>
+                            <option th:each="category : ${newCategoryList}" th:text="${category.unitName}" th:value="${category.unitValue}" th:selected="${#strings.contains(category.unitValue,orderItem.categoryId)}" th:attr="data-saleUnitValue=${category.saleUnitValue}"></option>
                         </select>
                     </div>
                     <div class="layui-col-md4 cattyClass">

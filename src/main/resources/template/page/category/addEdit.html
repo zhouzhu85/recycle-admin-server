@@ -3,21 +3,27 @@
 
     <div class="layui-form layuimini-form">
         <div class="layui-form-item">
-            <label class="layui-form-label required">分类名称</label>
+            <label class="layui-form-label required">废品分类名称</label>
             <div class="layui-input-block">
-                <input type="text" name="categoryName" lay-verify="required" lay-reqtext="分类名称不能为空" placeholder="请输入分类名称" th:value="${category?.categoryName}" class="layui-input">
+                <input type="text" name="categoryName" lay-verify="required" lay-reqtext="废品分类名称不能为空" placeholder="请输入废品分类名称" th:value="${category?.categoryName}" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label required">单位名称</label>
+            <label class="layui-form-label required">废品单位名称</label>
             <div class="layui-input-block">
-                <input type="text" name="unitName" lay-verify="required" lay-reqtext="单位名称不能为空" placeholder="请输入单位名称" th:value="${category?.unitName}" class="layui-input">
+                <input type="text" name="unitName" lay-verify="required" lay-reqtext="废品单位名称不能为空" placeholder="请输入废品单位名称" th:value="${category?.unitName}" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label required">单位值</label>
+            <label class="layui-form-label required">废品回收单价</label>
             <div class="layui-input-block">
-                <input type="number" name="unitValue" lay-verify="required" lay-reqtext="单位值不能为空" placeholder="请输入单位值" th:value="${category?.unitValue}" class="layui-input">
+                <input type="number" name="unitValue" lay-verify="required" lay-reqtext="废品回收单价不能为空" placeholder="请输入废品回收单价" th:value="${category?.unitValue}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">废品出售单价</label>
+            <div class="layui-input-block">
+                <input type="number" name="saleUnitValue" lay-verify="required" lay-reqtext="废品回收单价不能为空" placeholder="请输入废品回收单价" th:value="${category?.saleUnitValue}" class="layui-input">
             </div>
         </div>
         <input hidden name="id" th:value="${category?.id}">

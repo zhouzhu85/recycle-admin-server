@@ -51,7 +51,7 @@ public class CategoryManagementController {
     @GetMapping("list")
     @ResponseBody
     public RecycleResult getCategoryList(CategoryVo categoryVo){
-        IPage<TbUsers> categoryPageList = categoryService.findCategoryByPage(categoryVo);
+        IPage<TbCategory> categoryPageList = categoryService.findCategoryByPage(categoryVo);
         return RecycleResult.ok(categoryPageList.getRecords(),categoryPageList.getTotal());
     }
 
