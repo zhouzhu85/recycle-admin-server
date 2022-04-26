@@ -119,24 +119,7 @@
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            console.log(data);
-            $.ajax({
-                url:'/categoryManagement/save',
-                type: 'post',
-                data: data.field,
-                success:function (){
-                    var index = layer.alert("保存成功", function () {
-                        // 关闭弹出层
-                        layer.close(index);
-                        layer.close(parentIndex);
 
-                    });
-                },
-                error:function (){
-                    layer.alert("保存失败");
-                }
-            })
-            return false;
         });
 
         form.on('select(categoryFilter)', function(data){

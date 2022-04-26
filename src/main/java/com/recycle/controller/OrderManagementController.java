@@ -105,7 +105,9 @@ public class OrderManagementController {
                         orderItem.setAmount(new BigDecimal(value.toString()));
                     }
                     if (key.contains("catty") && key.contains(orderItem.getCategoryId())){
+                        TbCategory category = categoryService.findCategoryById(orderItem.getCategoryId());
                         orderItem.setCattyNumber(Long.parseLong(value.toString()));
+                        orderItem.setSaleAmount(category.getSaleUnitValue().multiply(new BigDecimal(value.toString())));
                     }
                     if (key.contains("orderItemNo") && key.contains(orderItem.getCategoryId())){
                         orderItem.setOrderItemNo(value.toString());

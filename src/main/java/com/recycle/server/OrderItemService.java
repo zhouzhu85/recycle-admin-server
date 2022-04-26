@@ -52,4 +52,10 @@ public interface OrderItemService {
      * @return
      */
     BigDecimal getAllCattyNumber();
+
+    /**
+     * 统计所有废品订单出售总金额
+     * @return
+     */
+    BigDecimal getOrderAllSaleAmount();
 }

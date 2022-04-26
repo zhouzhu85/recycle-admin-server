@@ -84,4 +84,12 @@ public class OrderItemServiceImpl implements OrderItemService {
         BigDecimal divide = new BigDecimal(cattyNumber).divide(new BigDecimal(2000));
         return divide;
     }
+
+    @Override
+    public BigDecimal getOrderAllSaleAmount() {
+        QueryWrapper<TbOrderItem> queryWrapper=new QueryWrapper<>();
+        queryWrapper.select("sum(sale_amount) as sale_amount");
+        TbOrderItem tbOrderItem = orderItemMapper.selectOne(queryWrapper);
+        return tbOrderItem.getSaleAmount();
+    }
 }

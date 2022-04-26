@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,8 +44,11 @@ public class IndexController {
     }
     @GetMapping("/welcome")
     public ModelAndView welcome(ModelAndView modelAndView){
+        BigDecimal orderAllAmount = orderService.getOrderAllAmount();
+        BigDecimal orderAllSaleAmount = orderItemService.getOrderAllSaleAmount();
+        modelAndView.addObject("profitAmount",orderAllSaleAmount.subtract(orderAllAmount));
         modelAndView.addObject("allUsersCount",usersService.findAllUsersCount());
-        modelAndView.addObject("orderAllAmount",orderService.getOrderAllAmount());
+        modelAndView.addObject("orderAllAmount",orderAllAmount);
         modelAndView.addObject("allCattyNumber",orderItemService.getAllCattyNumber());
         modelAndView.setViewName("/page/welcome.html");
         return modelAndView;
