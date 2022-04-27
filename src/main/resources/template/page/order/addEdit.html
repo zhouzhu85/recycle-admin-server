@@ -166,6 +166,14 @@
                 formData.allAmount=allAmount;
                 var formDataStr=JSON.stringify(formData);
                 console.log(formData);
+                if (formData.userNameId==""){
+                    layer.msg("请选择回收客");
+                    return;
+                }
+                if (formData.receiptDate==""){
+                    layer.msg("请选择收据日期");
+                    return;
+                }
                 $.ajax({
                     url:'/orderManagement/save',
                     type:'post',
