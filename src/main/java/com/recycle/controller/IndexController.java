@@ -49,7 +49,7 @@ public class IndexController {
         modelAndView.addObject("profitAmount",orderAllSaleAmount.subtract(orderAllAmount));
         modelAndView.addObject("allUsersCount",usersService.findAllUsersCount());
         modelAndView.addObject("orderAllAmount",orderAllAmount);
-        modelAndView.addObject("allCattyNumber",orderItemService.getAllCattyNumber());
+        modelAndView.addObject("orderAllSaleAmount",orderAllSaleAmount);
         modelAndView.setViewName("/page/welcome.html");
         return modelAndView;
     }
