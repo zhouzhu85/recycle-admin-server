@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>后台管理-登陆</title>
@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="/static/lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/lib/layui-v2.5.5/css/layui.css" media="all">
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
@@ -63,7 +63,7 @@
             <span class="bg1"></span>
             <span class="bg2"></span>
         </div>
-        <form class="layui-form login-bottom">
+        <form class="layui-form login-bottom" th:action="@{/toLogin}" method="post">
             <div class="center">
                 <div class="item">
                     <span class="icon icon-2"></span>
@@ -96,7 +96,7 @@
 <div class="footer">
     ©版权所有 2014-2018 叁贰柒工作室<span class="padding-5">|</span><a target="_blank" href="http://www.miitbeian.gov.cn">粤ICP备16006642号-2</a>
 </div>
-<script src="/static/lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script src="/static/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script>
     layui.use(['form','jquery'], function () {
         var $ = layui.jquery,
@@ -107,7 +107,6 @@
         if (top.location != self.location) top.location = self.location;
 
         $('.bind-password').on('click', function () {
-            console.log(11)
             if ($(this).hasClass('icon-5')) {
                 $(this).removeClass('icon-5');
                 $("input[name='password']").attr('type', 'password');
@@ -141,9 +140,9 @@
                 return false;
             }
             layer.msg('登录成功', function () {
-                window.location = '../index.html';
+
             });
-            return false;
+
         });
     });
 </script>

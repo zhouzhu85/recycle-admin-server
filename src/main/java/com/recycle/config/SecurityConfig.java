@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 //自定义登录页面
-                .loginPage("/login")
+                .loginPage("/toLogin")
                 //登录相关的界面，接口不要拦截
                 .permitAll()
                 .and()

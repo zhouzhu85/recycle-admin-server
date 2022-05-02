@@ -13,6 +13,7 @@ import com.recycle.server.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,7 +37,7 @@ public class IndexController {
     @Autowired
     private OrderItemService orderItemService;
 
-    @GetMapping("/")
+    @RequestMapping(value = {"/","index"})
     public ModelAndView index(ModelAndView modelAndView){
         modelAndView.addObject("userName","张三");
         modelAndView.setViewName("/index/index.html");
