@@ -19,6 +19,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/code/image")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 // and 方法表示结束当前标签，上下文回到HttpSecurity，开启新一轮的配置
@@ -28,6 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/toLogin")
                 //登录相关的界面，接口不要拦截
                 .permitAll()
+                .and()
+                .logout().logoutSuccessUrl("/")
                 .and()
                 .csrf().disable();
     }

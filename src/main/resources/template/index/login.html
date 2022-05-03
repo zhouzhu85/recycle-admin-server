@@ -78,9 +78,9 @@
 
                 <div id="validatePanel" class="item" style="width: 137px;">
                     <input type="text" name="captcha" placeholder="请输入验证码" maxlength="4">
-                    <img id="refreshCaptcha" class="validateImg"  src="/static/images/captcha.jpg" >
+                    <img id="refreshCaptcha" class="validateImg"  src="/code/image">
                 </div>
-
+                <span style="color: red">验证码错误</span>
             </div>
             <div class="tip">
                 <span class="icon-nocheck"></span>
@@ -93,9 +93,9 @@
         </form>
     </div>
 </div>
-<div class="footer">
-    ©版权所有 2014-2018 叁贰柒工作室<span class="padding-5">|</span><a target="_blank" href="http://www.miitbeian.gov.cn">粤ICP备16006642号-2</a>
-</div>
+<!--<div class="footer">-->
+<!--    ©版权所有 2014-2018 叁贰柒工作室<span class="padding-5">|</span><a target="_blank" href="http://www.miitbeian.gov.cn">粤ICP备16006642号-2</a>-->
+<!--</div>-->
 <script src="/static/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script>
     layui.use(['form','jquery'], function () {
@@ -123,6 +123,10 @@
                 $(this).addClass('icon-check');
             }
         });
+
+        $("#refreshCaptcha").on('click',function (){
+            $(this).attr("src","/code/image");
+        })
 
         // 进行登录操作
         form.on('submit(login)', function (data) {

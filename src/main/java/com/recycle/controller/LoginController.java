@@ -1,9 +1,18 @@
 package com.recycle.controller;
 
+import com.google.code.kaptcha.impl.DefaultKaptcha;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * @author zhouzhu
@@ -12,9 +21,25 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
+    @Autowired
+    private DefaultKaptcha defaultKaptcha;
+
     @RequestMapping("toLogin")
     public ModelAndView login(ModelAndView modelAndView){
         modelAndView.setViewName("/index/login");
         return modelAndView;
+    }
+
+    @RequestMapping("/code/image")
+    public void imageCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //获取验证码字符串
+        String code = defaultKaptcha.createText();
+        //设置验证码到session
+        request.getSession().setAttribute("SESSION_KEY", code);
+        //获取验证码图片
+        BufferedImage image = defaultKaptcha.createImage(code);
+        //将验证码图片写出去
+        ServletOutputStream out = response.getOutputStream();
+        ImageIO.write(image,"jpg",out);
     }
 }
