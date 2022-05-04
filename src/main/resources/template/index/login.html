@@ -63,7 +63,7 @@
             <span class="bg1"></span>
             <span class="bg2"></span>
         </div>
-        <form class="layui-form login-bottom" th:action="@{/toLogin}" method="post">
+        <form class="layui-form login-bottom" th:action="@{/doLogin}" method="post">
             <div class="center">
                 <div class="item">
                     <span class="icon icon-2"></span>
@@ -80,7 +80,7 @@
                     <input type="text" name="captcha" placeholder="请输入验证码" maxlength="4">
                     <img id="refreshCaptcha" class="validateImg"  src="/code/image">
                 </div>
-                <span style="color: red">验证码错误</span>
+                <span style="color: red" th:text="${error}"></span>
             </div>
             <div class="tip">
                 <span class="icon-nocheck"></span>
@@ -143,10 +143,18 @@
                 layer.msg('验证码不能为空');
                 return false;
             }
-            layer.msg('登录成功', function () {
-
-            });
-
+            // $.ajax({
+            //     url:'/doLogin',
+            //     type:'post',
+            //     data:data,
+            //     success:function (result){
+            //         console.log(result);
+            //         layer.msg('登录成功');
+            //     },error:function (error){
+            //         console.log(error)
+            //     }
+            // })
+            // return false;
         });
     });
 </script>

@@ -3,6 +3,7 @@ package com.recycle.controller;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +26,7 @@ public class LoginController {
     private DefaultKaptcha defaultKaptcha;
 
     @RequestMapping("toLogin")
-    public ModelAndView login(ModelAndView modelAndView){
+    public ModelAndView login(ModelAndView modelAndView,String error){
         modelAndView.setViewName("/index/login");
         return modelAndView;
     }
@@ -35,11 +36,27 @@ public class LoginController {
         //获取验证码字符串
         String code = defaultKaptcha.createText();
         //设置验证码到session
-        request.getSession().setAttribute("SESSION_KEY", code);
+        request.getSession().setAttribute("captcha", code);
         //获取验证码图片
         BufferedImage image = defaultKaptcha.createImage(code);
         //将验证码图片写出去
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(image,"jpg",out);
+    }
+
+    @RequestMapping("/login/error")
+    public String loginError(HttpServletRequest request, HttpServletResponse response, Model model) {
+        response.setContentType("text/html;charset=utf-8");
+        Object exception=
+                request.getSession().getAttribute("errr");
+        try {
+            response.getWriter().write(exception.toString());
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(exception);
+        model.addAttribute("error",exception);
+
+        return "/index/login";
     }
 }

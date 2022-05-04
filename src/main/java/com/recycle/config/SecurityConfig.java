@@ -1,6 +1,7 @@
 package com.recycle.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -8,6 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @author zhouzhu
@@ -19,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/code/image")
+                .antMatchers("/code/image","/toLogin","/doLogin","/login/error")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -28,12 +32,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 //自定义登录页面
                 .loginPage("/toLogin")
+                //自定义登录接口
+                .loginProcessingUrl("/doLogin")
                 //登录相关的界面，接口不要拦截
                 .permitAll()
+                .failureHandler(new CustomAuthenticationFailureHandler())
                 .and()
                 .logout().logoutSuccessUrl("/")
                 .and()
                 .csrf().disable();
+
+        http.addFilterBefore(loginFilterConfig(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -60,5 +69,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    LoginFilterConfig loginFilterConfig() throws Exception {
+        LoginFilterConfig loginFilterConfig=new LoginFilterConfig();
+        //验证接口
+        loginFilterConfig.setFilterProcessesUrl("/doLogin");
+        loginFilterConfig.setAuthenticationManager(authenticationManagerBean());
+        //验证码成功跳转接口
+        loginFilterConfig.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/"));
+        //验证码失败跳转接口
+        loginFilterConfig.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler("/login/error"));
+        return loginFilterConfig;
     }
 }
