@@ -1,6 +1,7 @@
-package com.recycle.config;
+package com.recycle.config.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.recycle.config.exception.VerificationCodeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +22,17 @@ import java.util.Map;
  */
 @Component
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
-    @Autowired
-    private ObjectMapper objectMapper;
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         logger.info("登陆失败");
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("code","0");
-        map.put("msg","用户名或者密码错误");
-        response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(objectMapper.writeValueAsString(map));
-        request.getSession().setAttribute("errr",map.get("msg"));
+        if (exception instanceof VerificationCodeException){
+            request.getSession().setAttribute("errorMsg",exception.getMessage());
+        }else {
+            request.getSession().setAttribute("errorMsg","用户名或密码错误");
+        }
         // 转发到错误Url
         request.getRequestDispatcher("/login/error").forward(request,response);
 

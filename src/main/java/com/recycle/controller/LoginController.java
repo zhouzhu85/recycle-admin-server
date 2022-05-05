@@ -47,15 +47,14 @@ public class LoginController {
     @RequestMapping("/login/error")
     public String loginError(HttpServletRequest request, HttpServletResponse response, Model model) {
         response.setContentType("text/html;charset=utf-8");
-        Object exception=
-                request.getSession().getAttribute("errr");
+        Object exception= request.getSession().getAttribute("errorMsg");
         try {
             response.getWriter().write(exception.toString());
         }catch (IOException e) {
             e.printStackTrace();
         }
         System.out.println(exception);
-        model.addAttribute("error",exception);
+        model.addAttribute("errorMsg",exception);
 
         return "/index/login";
     }

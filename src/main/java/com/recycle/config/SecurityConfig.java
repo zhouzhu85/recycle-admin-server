@@ -1,5 +1,7 @@
 package com.recycle.config;
 
+import com.recycle.config.filter.VerificationCodeFilter;
+import com.recycle.config.handler.CustomAuthenticationFailureHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,8 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable();
 
-        http.addFilterBefore(loginFilterConfig(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new VerificationCodeFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -71,22 +71,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 
-    @Bean
-    LoginFilterConfig loginFilterConfig() throws Exception {
-        LoginFilterConfig loginFilterConfig=new LoginFilterConfig();
-        //验证接口
-        loginFilterConfig.setFilterProcessesUrl("/doLogin");
-        loginFilterConfig.setAuthenticationManager(authenticationManagerBean());
-        //验证码成功跳转接口
-        loginFilterConfig.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/"));
-        //验证码失败跳转接口
-        loginFilterConfig.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler("/login/error"));
-        return loginFilterConfig;
-    }
 }
